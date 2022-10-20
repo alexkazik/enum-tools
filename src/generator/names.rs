@@ -1,7 +1,6 @@
 use crate::generator::{Derive, Features};
 use proc_macro2::{Ident, Span};
 
-#[remain::sorted]
 pub(crate) struct Names {
     pub(crate) ident_as_str: Ident,
     pub(crate) ident_from_str_fn: Ident,

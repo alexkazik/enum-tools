@@ -19,7 +19,6 @@ use crate::feature::try_from_fn::FeatureTryFromFn;
 use crate::feature::try_from_trait::FeatureTryFromTrait;
 use crate::generator::Derive;
 
-#[remain::sorted]
 pub(crate) struct Features {
     pub(crate) as_str_fn: FeatureAsStrFn,
     pub(crate) debug_trait: FeatureDebugTrait,
@@ -157,14 +156,12 @@ impl Features {
     }
 }
 
-#[remain::sorted]
 pub(crate) struct Features0<'a> {
     pub(crate) max: &'a mut FeatureMaxConst,
     pub(crate) min: &'a mut FeatureMinConst,
     pub(crate) table_range: &'a mut FeatureTableRange,
 }
 
-#[remain::sorted]
 pub(crate) struct Features1<'a> {
     pub(crate) max: &'a mut FeatureMaxConst,
     pub(crate) min: &'a mut FeatureMinConst,
@@ -175,7 +172,6 @@ pub(crate) struct Features1<'a> {
     pub(crate) table_range: &'a mut FeatureTableRange,
 }
 
-#[remain::sorted]
 pub(crate) struct Features2<'a> {
     pub(crate) as_str: &'a mut FeatureAsStrFn,
     pub(crate) max: &'a mut FeatureMaxConst,
