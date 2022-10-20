@@ -4,6 +4,7 @@
 
 * Fix clippy warnings
 * Remove dependency remain
+* Remove patch level precision of the dependencies
 
 ## 0.5.0 -- 2022-10-16
 
