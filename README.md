@@ -30,7 +30,7 @@ For the full documentation see `EnumTools`.
 // features which implement a trait
 #[enum_tools(Debug, Display, FromStr, Into, IntoStr, TryFrom)]
 // features which create a iterator (function and struct with impl)
-#[enum_tools(iter, names)]
+#[enum_tools(iter, names, range)]
 #[repr(i8)]
 pub enum MyEnum { A=0, B=5, C=1 }
 ```
@@ -51,6 +51,7 @@ impl MyEnum {
 
     pub fn iter() -> MyEnumIter // a iterator over all elements by value
     pub fn names() -> MyEnumNames // a iterator over all names by value
+    pub fn range(start: Self, end: Self) -> MyEnumIter // similar to `..=`
 }
 
 // implementations on the enum

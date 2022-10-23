@@ -1,5 +1,9 @@
 # Changelog for enum-tools
 
+## upcoming
+
+* Add feature range_fn
+
 ## 0.5.1 -- 2022-10-30
 
 * Fix clippy warnings

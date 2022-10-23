@@ -20,7 +20,7 @@
 //! // features which implement a trait
 //! #[enum_tools(Debug, Display, FromStr, Into, IntoStr, TryFrom)]
 //! // features which create a iterator (function and struct with impl)
-//! #[enum_tools(iter, names)]
+//! #[enum_tools(iter, names, range)]
 //! #[repr(i8)]
 //! pub enum MyEnum { A=0, B=5, C=1 }
 //! ```
@@ -48,6 +48,8 @@
 //!     pub fn iter() -> MyEnumIter // a iterator over all elements by value
 //!     # {todo!()}
 //!     pub fn names() -> MyEnumNames // a iterator over all names by value
+//!     # {todo!()}
+//!     pub fn range(start: Self, end: Self) -> MyEnumIter // similar to `..=`
 //!     # {todo!()}
 //! }
 //!
@@ -344,6 +346,16 @@ mod parser;
 /// - `name`, `vis`: see common parameter
 ///
 /// This always generates a table, will be shared with `as_str`, `FromStr` and `from_str` if they also use a table.
+///
+/// ## range
+///
+/// `$vis fn range(start: Self, end: Self) -> SelfIter {..}`
+///
+/// An Iterator over a inclusive range of the enum, in value order, similar to `..=`.
+///
+/// This feature requires that the feature `iter` is activated and the mode `"table_inline"` is not used.
+///
+/// For enums with holes the function to create the range may be not very performant.
 ///
 #[proc_macro_error]
 #[proc_macro_derive(EnumTools, attributes(enum_tools))]
