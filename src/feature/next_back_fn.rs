@@ -35,7 +35,7 @@ impl FeatureNextBackFn {
             return;
         }
 
-        features.min.enabled = true;
+        features.min_const.enabled = true;
         // range_table is only created when in with holes mode
         features.table_range.enabled = true;
     }

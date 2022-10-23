@@ -23,7 +23,7 @@ impl FeatureIntoStrTrait {
             return;
         }
 
-        features.as_str.enabled = true;
+        features.as_str_fn.enabled = true;
     }
 
     pub(crate) fn generate(self, derive: &Derive, names: &Names) -> TokenStream {

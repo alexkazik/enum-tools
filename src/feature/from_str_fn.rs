@@ -61,7 +61,7 @@ impl FeatureFromStrFn {
             if derive.mode.is_with_holes() {
                 features.table_enum.enabled = true;
             } else {
-                features.min.enabled = true;
+                features.min_const.enabled = true;
             }
         }
     }

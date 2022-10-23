@@ -107,11 +107,11 @@ impl Features {
 
     fn resolve_enable(&mut self, derive: &Derive) {
         let mut features2 = Features2 {
-            as_str: &mut self.as_str_fn,
-            min: &mut self.min_const,
-            max: &mut self.max_const,
-            next: &mut self.next_fn,
-            next_back: &mut self.next_back_fn,
+            as_str_fn: &mut self.as_str_fn,
+            min_const: &mut self.min_const,
+            max_const: &mut self.max_const,
+            next_fn: &mut self.next_fn,
+            next_back_fn: &mut self.next_back_fn,
             table_enum: &mut self.table_enum,
             table_name: &mut self.table_name,
             table_range: &mut self.table_range,
@@ -121,35 +121,35 @@ impl Features {
         self.into_str_trait.check(&mut features2);
 
         let mut features1 = Features1 {
-            min: features2.min,
-            max: features2.max,
-            next: features2.next,
-            next_back: features2.next_back,
+            min_const: features2.min_const,
+            max_const: features2.max_const,
+            next_fn: features2.next_fn,
+            next_back_fn: features2.next_back_fn,
             table_enum: features2.table_enum,
             table_name: features2.table_name,
             table_range: features2.table_range,
         };
-        features2.as_str.check(derive, &mut features1);
+        features2.as_str_fn.check(derive, &mut features1);
         self.from_str_trait.check(derive, &mut features1);
         self.from_str_fn.check(derive, &mut features1);
         self.iter.check(derive, &mut features1);
         self.names.check(&mut features1);
 
         let mut features0 = Features0 {
-            min: features1.min,
-            max: features1.max,
+            min_const: features1.min_const,
+            max_const: features1.max_const,
             table_range: features1.table_range,
         };
-        features1.next.check(&mut features0);
-        features1.next_back.check(&mut features0);
+        features1.next_fn.check(&mut features0);
+        features1.next_back_fn.check(&mut features0);
         self.try_from_trait.check(&mut features0);
         self.try_from_fn.check(&mut features0);
 
         // totally stand-alone
         self.into_trait.check();
         self.into_fn.check();
-        features0.min.check();
-        features0.max.check();
+        features0.min_const.check();
+        features0.max_const.check();
         features1.table_enum.check();
         features1.table_name.check();
         features0.table_range.check();
@@ -157,27 +157,27 @@ impl Features {
 }
 
 pub(crate) struct Features0<'a> {
-    pub(crate) max: &'a mut FeatureMaxConst,
-    pub(crate) min: &'a mut FeatureMinConst,
+    pub(crate) max_const: &'a mut FeatureMaxConst,
+    pub(crate) min_const: &'a mut FeatureMinConst,
     pub(crate) table_range: &'a mut FeatureTableRange,
 }
 
 pub(crate) struct Features1<'a> {
-    pub(crate) max: &'a mut FeatureMaxConst,
-    pub(crate) min: &'a mut FeatureMinConst,
-    pub(crate) next: &'a mut FeatureNextFn,
-    pub(crate) next_back: &'a mut FeatureNextBackFn,
+    pub(crate) max_const: &'a mut FeatureMaxConst,
+    pub(crate) min_const: &'a mut FeatureMinConst,
+    pub(crate) next_fn: &'a mut FeatureNextFn,
+    pub(crate) next_back_fn: &'a mut FeatureNextBackFn,
     pub(crate) table_enum: &'a mut FeatureTableEnum,
     pub(crate) table_name: &'a mut FeatureTableName,
     pub(crate) table_range: &'a mut FeatureTableRange,
 }
 
 pub(crate) struct Features2<'a> {
-    pub(crate) as_str: &'a mut FeatureAsStrFn,
-    pub(crate) max: &'a mut FeatureMaxConst,
-    pub(crate) min: &'a mut FeatureMinConst,
-    pub(crate) next: &'a mut FeatureNextFn,
-    pub(crate) next_back: &'a mut FeatureNextBackFn,
+    pub(crate) as_str_fn: &'a mut FeatureAsStrFn,
+    pub(crate) max_const: &'a mut FeatureMaxConst,
+    pub(crate) min_const: &'a mut FeatureMinConst,
+    pub(crate) next_fn: &'a mut FeatureNextFn,
+    pub(crate) next_back_fn: &'a mut FeatureNextBackFn,
     pub(crate) table_enum: &'a mut FeatureTableEnum,
     pub(crate) table_name: &'a mut FeatureTableName,
     pub(crate) table_range: &'a mut FeatureTableRange,

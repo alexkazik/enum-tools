@@ -58,7 +58,7 @@ impl FeatureAsStrFn {
 
         if self.mode == AsStrMode::Table {
             if derive.mode.is_gapless() {
-                features.min.enabled = true;
+                features.min_const.enabled = true;
             }
             features.table_name.enabled = true;
             // range_table is only created when in with holes mode

@@ -7,8 +7,8 @@ use quote::quote;
 
 impl FeatureIter {
     pub(crate) fn check_next_and_back(&self, features: &mut Features1) {
-        features.next.enabled = true;
-        features.next_back.enabled = true;
+        features.next_fn.enabled = true;
+        features.next_back_fn.enabled = true;
     }
 
     pub(crate) fn iter_next_and_back(

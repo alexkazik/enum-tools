@@ -35,7 +35,7 @@ impl FeatureNextFn {
             return;
         }
 
-        features.max.enabled = true;
+        features.max_const.enabled = true;
         // range_table is only created when in with holes mode
         features.table_range.enabled = true;
     }
