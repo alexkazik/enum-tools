@@ -45,7 +45,12 @@ impl FeatureIter {
             }
         };
 
-        extend_common(&mut outer, ident_enum.to_token_stream(), ident_iter_struct);
+        extend_common(
+            &mut outer,
+            ident_enum.to_token_stream(),
+            ident_iter_struct,
+            false,
+        );
 
         (inner, outer)
     }

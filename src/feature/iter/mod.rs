@@ -102,6 +102,7 @@ pub(crate) fn extend_common(
     outer: &mut TokenStream,
     ident_item: TokenStream,
     ident_struct: &Ident,
+    range_inclusive_iterator: bool,
 ) {
     outer.extend(quote! {
         impl ::core::iter::Iterator for #ident_struct {
@@ -158,8 +159,30 @@ pub(crate) fn extend_common(
             }
         }
 
-        impl ::core::iter::ExactSizeIterator for #ident_struct { }
-
         impl ::core::iter::FusedIterator for #ident_struct { }
     });
+
+    if range_inclusive_iterator {
+        // RangeInclusive is not necessary a ExactSizeIterator but we can guarantee it due to
+        // requirements on the enum, and thus it has to create it's own instance instead of
+        // simply forwarding it, like the other modes.
+        outer.extend(quote! {
+            impl ::core::iter::ExactSizeIterator for #ident_struct {
+                #[inline]
+                fn len(&self) -> usize {
+                    use ::core::iter::Iterator;
+                    self.inner.size_hint().0
+                }
+            }
+        });
+    } else {
+        outer.extend(quote! {
+            impl ::core::iter::ExactSizeIterator for #ident_struct {
+                #[inline]
+                fn len(&self) -> usize {
+                    self.inner.len()
+                }
+            }
+        });
+    }
 }

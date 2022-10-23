@@ -33,17 +33,15 @@ mod eh {
 #[test]
 fn iter_table_gapless() {
     use eg::EG;
-    assert_eq!(
-        EG::iter().collect::<Vec<_>>(),
-        vec![EG::A, EG::B, EG::C, EG::D]
-    );
+    let it = EG::iter();
+    assert_eq!(it.len(), 4);
+    assert_eq!(it.collect::<Vec<_>>(), vec![EG::A, EG::B, EG::C, EG::D]);
 }
 
 #[test]
 fn iter_table_with_holes() {
     use eh::EH;
-    assert_eq!(
-        EH::iter().collect::<Vec<_>>(),
-        vec![EH::A, EH::D, EH::C, EH::B]
-    );
+    let it = EH::iter();
+    assert_eq!(it.len(), 4);
+    assert_eq!(it.collect::<Vec<_>>(), vec![EH::A, EH::D, EH::C, EH::B]);
 }

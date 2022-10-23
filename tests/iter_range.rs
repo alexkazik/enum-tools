@@ -17,8 +17,7 @@ mod eg {
 #[test]
 fn iter_range() {
     use eg::EG;
-    assert_eq!(
-        EG::iter().collect::<Vec<_>>(),
-        vec![EG::A, EG::B, EG::C, EG::D]
-    );
+    let it = EG::iter();
+    assert_eq!(it.len(), 4);
+    assert_eq!(it.collect::<Vec<_>>(), vec![EG::A, EG::B, EG::C, EG::D]);
 }

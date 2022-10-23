@@ -83,7 +83,7 @@ impl FeatureNames {
             }
         };
 
-        extend_common(&mut outer, quote! {&'static str}, ident_names_struct);
+        extend_common(&mut outer, quote! {&'static str}, ident_names_struct, false);
 
         (inner, outer)
     }
