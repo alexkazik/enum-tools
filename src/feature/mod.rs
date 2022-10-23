@@ -12,6 +12,7 @@ pub(crate) mod min_const;
 pub(crate) mod names;
 pub(crate) mod next_back_fn;
 pub(crate) mod next_fn;
+pub(crate) mod range_fn;
 pub(crate) mod sorted;
 pub(crate) mod table_enum;
 pub(crate) mod table_name;

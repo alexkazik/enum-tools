@@ -12,6 +12,7 @@ use crate::feature::min_const::FeatureMinConst;
 use crate::feature::names::FeatureNames;
 use crate::feature::next_back_fn::FeatureNextBackFn;
 use crate::feature::next_fn::FeatureNextFn;
+use crate::feature::range_fn::FeatureRangeFn;
 use crate::feature::sorted::FeatureSorted;
 use crate::feature::try_from_fn::FeatureTryFromFn;
 use crate::feature::try_from_trait::FeatureTryFromTrait;
@@ -111,6 +112,7 @@ impl Derive {
             names: FeatureNames::parse(&mut feature_parser),
             next_back_fn: FeatureNextBackFn::parse(&mut feature_parser),
             next_fn: FeatureNextFn::parse(&mut feature_parser),
+            range_fn: FeatureRangeFn::parse(&mut feature_parser),
             table_enum: Default::default(),
             table_name: Default::default(),
             table_range: Default::default(),

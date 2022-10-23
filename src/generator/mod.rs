@@ -59,6 +59,9 @@ impl Derive {
         let (names_inner, names_outer) = features.names.generate(&self, &names);
         let next_back_fn = features.next_back_fn.generate(&self, &names);
         let next_fn = features.next_fn.generate(&self, &names);
+        let range_fn = features
+            .range_fn
+            .generate(&self, &names, features.iter.mode);
         let table_enum = features.table_enum.generate(&self, &names);
         let table_name = features.table_name.generate(&self, &names);
         let table_range = features.table_range.generate(&self, &names);
@@ -84,6 +87,7 @@ impl Derive {
                 #names_inner
                 #next_fn
                 #next_back_fn
+                #range_fn
                 #try_from_fn
             }
             // impl/struct

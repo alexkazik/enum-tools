@@ -12,6 +12,7 @@ use crate::feature::min_const::FeatureMinConst;
 use crate::feature::names::FeatureNames;
 use crate::feature::next_back_fn::FeatureNextBackFn;
 use crate::feature::next_fn::FeatureNextFn;
+use crate::feature::range_fn::FeatureRangeFn;
 use crate::feature::table_enum::FeatureTableEnum;
 use crate::feature::table_name::FeatureTableName;
 use crate::feature::table_range::FeatureTableRange;
@@ -34,6 +35,7 @@ pub(crate) struct Features {
     pub(crate) names: FeatureNames,
     pub(crate) next_back_fn: FeatureNextBackFn,
     pub(crate) next_fn: FeatureNextFn,
+    pub(crate) range_fn: FeatureRangeFn,
     pub(crate) table_enum: FeatureTableEnum,
     pub(crate) table_name: FeatureTableName,
     pub(crate) table_range: FeatureTableRange,
@@ -96,7 +98,9 @@ impl Features {
                 // has holes
                 if table_enum {
                     self.iter.mode = IterMode::Table;
-                } else if derive.num_values * derive.repr_size_guessed <= 8 {
+                } else if derive.num_values * derive.repr_size_guessed <= 8
+                    && !self.range_fn.enabled
+                {
                     self.iter.mode = IterMode::TableInline;
                 } else {
                     self.iter.mode = IterMode::NextAndBack;
@@ -108,6 +112,7 @@ impl Features {
     fn resolve_enable(&mut self, derive: &Derive) {
         let mut features2 = Features2 {
             as_str_fn: &mut self.as_str_fn,
+            iter: &mut self.iter,
             min_const: &mut self.min_const,
             max_const: &mut self.max_const,
             next_fn: &mut self.next_fn,
@@ -119,6 +124,7 @@ impl Features {
         self.debug_trait.check(&mut features2);
         self.display_trait.check(&mut features2);
         self.into_str_trait.check(&mut features2);
+        self.range_fn.check(derive, &mut features2);
 
         let mut features1 = Features1 {
             min_const: features2.min_const,
@@ -132,7 +138,7 @@ impl Features {
         features2.as_str_fn.check(derive, &mut features1);
         self.from_str_trait.check(derive, &mut features1);
         self.from_str_fn.check(derive, &mut features1);
-        self.iter.check(derive, &mut features1);
+        features2.iter.check(derive, &mut features1);
         self.names.check(&mut features1);
 
         let mut features0 = Features0 {
@@ -174,6 +180,7 @@ pub(crate) struct Features1<'a> {
 
 pub(crate) struct Features2<'a> {
     pub(crate) as_str_fn: &'a mut FeatureAsStrFn,
+    pub(crate) iter: &'a mut FeatureIter,
     pub(crate) max_const: &'a mut FeatureMaxConst,
     pub(crate) min_const: &'a mut FeatureMinConst,
     pub(crate) next_fn: &'a mut FeatureNextFn,

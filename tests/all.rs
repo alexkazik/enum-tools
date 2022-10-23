@@ -9,7 +9,7 @@ mod eg {
     #[enum_tools(as_str, FromStr, from_str, iter)]
     // everything else
     #[enum_tools(Debug, Display, Into, into, MAX, MIN)]
-    #[enum_tools(names, next, next_back, TryFrom, try_from)]
+    #[enum_tools(names, next, next_back, range, TryFrom, try_from)]
     #[repr(i8)]
     pub(crate) enum EG {
         A,
@@ -30,7 +30,7 @@ mod eh {
     #[enum_tools(as_str, FromStr, from_str, iter)]
     // everything else
     #[enum_tools(Debug, Display, Into, into, IntoStr, MAX, MIN)]
-    #[enum_tools(names, next, next_back, TryFrom, try_from)]
+    #[enum_tools(names, next, next_back, range, TryFrom, try_from)]
     #[repr(i8)]
     pub(crate) enum EH {
         A = 0,
