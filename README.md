@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/alexkazik/enum-tools/workflows/CI/badge.svg)](https://github.com/alexkazik/enum-tools/actions?query=workflow%3ACI)
+[![Build Status](https://github.com/alexkazik/enum-tools/workflows/CI/badge.svg?branch=master&event=push)](https://github.com/alexkazik/enum-tools/actions?query=workflow%3ACI+branch%3Amaster+event%3Apush)
 [![Dependency status](https://deps.rs/repo/github/alexkazik/enum-tools/status.svg)](https://deps.rs/repo/github/alexkazik/enum-tools)
 [![crates.io](https://img.shields.io/crates/v/enum-tools.svg)](https://crates.io/crates/enum-tools)
 [![Downloads](https://img.shields.io/crates/d/enum-tools.svg)](https://crates.io/crates/enum-tools)
