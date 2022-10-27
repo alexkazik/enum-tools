@@ -22,19 +22,20 @@ pub(crate) struct Names {
 
 impl Names {
     pub(crate) fn new(features: &Features, derive: &Derive) -> Self {
+        let Derive { ident_enum, .. } = derive;
         Self {
             ident_as_str: Ident::new(&features.as_str_fn.name, Span::call_site()),
             ident_from_str_fn: Ident::new(&features.from_str_fn.name, Span::call_site()),
             ident_iter_fn: Ident::new(&features.iter.name, Span::call_site()),
             ident_iter_struct: match features.iter.struct_name {
-                None => Ident::new(&format!("{}Iter", derive.ident_enum), Span::call_site()),
+                None => Ident::new(&format!("{ident_enum}Iter"), Span::call_site()),
                 Some(ref name) => Ident::new(name, Span::call_site()),
             },
             ident_max: Ident::new(&features.max_const.name, Span::call_site()),
             ident_min: Ident::new(&features.min_const.name, Span::call_site()),
             ident_names_fn: Ident::new(&features.names.name, Span::call_site()),
             ident_names_struct: match features.names.struct_name {
-                None => Ident::new(&format!("{}Names", derive.ident_enum), Span::call_site()),
+                None => Ident::new(&format!("{ident_enum}Names"), Span::call_site()),
                 Some(ref name) => Ident::new(name, Span::call_site()),
             },
             ident_next: Ident::new(&features.next_fn.name, Span::call_site()),

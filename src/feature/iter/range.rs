@@ -17,14 +17,15 @@ impl FeatureIter {
     }
 
     pub(crate) fn iter_range(&self, derive: &Derive, names: &Names) -> (TokenStream, TokenStream) {
-        let start = LitInt::new(
-            &format!("{}{}", derive.min_key, derive.repr),
-            Span::call_site(),
-        );
-        let end = LitInt::new(
-            &format!("{}{}", derive.max_key, derive.repr),
-            Span::call_site(),
-        );
+        let Derive {
+            repr,
+            vis_enum,
+            max_key,
+            min_key,
+            ..
+        } = derive;
+        let start = LitInt::new(&format!("{min_key}{repr}"), Span::call_site());
+        let end = LitInt::new(&format!("{max_key}{repr}"), Span::call_site());
 
         let Derive {
             repr, ident_enum, ..
@@ -34,7 +35,7 @@ impl FeatureIter {
             ident_iter_struct,
             ..
         } = names;
-        let vis = self.vis.as_ref().unwrap_or(&derive.vis_enum);
+        let vis = self.vis.as_ref().unwrap_or(vis_enum);
 
         let doc_inner = format!(" An Iterator over the items of {ident_enum}, in value order.");
         let doc_outer = format!(" An Iterator over the items of {ident_enum}.");

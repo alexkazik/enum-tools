@@ -20,6 +20,7 @@ impl FeatureTableRange {
 
         if let Mode::WithHoles { ref value_ranges } = derive.mode {
             let FeatureTableRange { with_offset, .. } = self;
+            let Derive { repr, .. } = derive;
             let Names {
                 ident_table_range, ..
             } = names;
@@ -28,9 +29,9 @@ impl FeatureTableRange {
             let hl = value_ranges.len();
             let mut h = Vec::new();
             for (b0, e0) in value_ranges.iter() {
-                let b1 = LitInt::new(&format!("{b0}{}", derive.repr), Span::call_site());
-                let e1 = LitInt::new(&format!("{e0}{}", derive.repr), Span::call_site());
-                let o1 = LitInt::new(&format!("{ofs}{}", derive.repr), Span::call_site());
+                let b1 = LitInt::new(&format!("{b0}{repr}"), Span::call_site());
+                let e1 = LitInt::new(&format!("{e0}{repr}"), Span::call_site());
+                let o1 = LitInt::new(&format!("{ofs}{repr}"), Span::call_site());
                 h.push(if with_offset {
                     quote! {(#b1 ..= #e1, #b1.wrapping_sub(#o1))}
                 } else {
@@ -38,7 +39,7 @@ impl FeatureTableRange {
                 });
                 ofs += e0 - b0 + 1;
             }
-            let repr = &derive.repr;
+            let repr = repr;
 
             if with_offset {
                 quote! {
