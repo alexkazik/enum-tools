@@ -28,9 +28,9 @@ impl FeatureTableRange {
             let hl = value_ranges.len();
             let mut h = Vec::new();
             for (b0, e0) in value_ranges.iter() {
-                let b1 = LitInt::new(&format!("{}{}", b0, derive.repr), Span::call_site());
-                let e1 = LitInt::new(&format!("{}{}", e0, derive.repr), Span::call_site());
-                let o1 = LitInt::new(&format!("{}{}", ofs, derive.repr), Span::call_site());
+                let b1 = LitInt::new(&format!("{b0}{}", derive.repr), Span::call_site());
+                let e1 = LitInt::new(&format!("{e0}{}", derive.repr), Span::call_site());
+                let o1 = LitInt::new(&format!("{ofs}{}", derive.repr), Span::call_site());
                 h.push(if with_offset {
                     quote! {(#b1 ..= #e1, #b1.wrapping_sub(#o1))}
                 } else {

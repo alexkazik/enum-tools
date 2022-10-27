@@ -60,13 +60,12 @@ impl FeatureNames {
         let vis = self.vis.as_ref().unwrap_or(&derive.vis_enum);
 
         let doc_inner = format!(
-            " An Iterator over the names of {}, in value order.\n\
+            " An Iterator over the names of {ident_enum}, in value order.\n\
             \n\
             Use `Self::iter().zip(Self::names())` to iterate over pairs of\n\
             the item and it's name.",
-            ident_enum
         );
-        let doc_outer = format!(" An Iterator over the names of {}.", ident_enum);
+        let doc_outer = format!(" An Iterator over the names of {ident_enum}.");
 
         let inner = quote! {
             #[doc=#doc_inner]

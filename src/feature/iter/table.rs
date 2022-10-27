@@ -20,11 +20,8 @@ impl FeatureIter {
         } = names;
         let vis = self.vis.as_ref().unwrap_or(&derive.vis_enum);
 
-        let doc_inner = format!(
-            " An Iterator over the items of {}, in value order.",
-            ident_enum
-        );
-        let doc_outer = format!(" An Iterator over the items of {}.", ident_enum);
+        let doc_inner = format!(" An Iterator over the items of {ident_enum}, in value order.");
+        let doc_outer = format!(" An Iterator over the items of {ident_enum}.");
 
         let inner = quote! {
             #[doc=#doc_inner]
