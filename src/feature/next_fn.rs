@@ -77,8 +77,8 @@ impl FeatureNextFn {
                     let mut current = self as #repr;
                     let mut it = Self::#ident_table_range.iter();
                     loop {
-                        // Safety: since self/current is an valid enum, one range will match
-                        let r = it.next().unwrap();
+                        // Safety: since self/current is an valid enum, one range will match and the iterator will never return None
+                        let r = unsafe { it.next().unwrap_unchecked() };
                         if r.0.contains(&current){
                             // Safety: Only when current is type::MAX: the wrapping will happen, but since
                             // the number will not be in this range and thus the next iter will be used,

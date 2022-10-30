@@ -120,11 +120,13 @@ impl FeatureAsStrFn {
                         /// Returns the name of this element
                         #vis fn #ident_as_str(self) -> &'static str {
                             use ::core::iter::Iterator;
-                            // Safety: all enums are in that table
-                            let t = Self::#ident_table_range
-                                .iter()
-                                .find(|t| t.0.contains(&(self as #repr)))
-                                .unwrap();
+                            // Safety: all enums are in that table and thus find will succeed
+                            let t = unsafe {
+                                Self::#ident_table_range
+                                    .iter()
+                                    .find(|t| t.0.contains(&(self as #repr)))
+                                    .unwrap_unchecked()
+                            };
                             Self::#ident_table_name[(self as #repr).wrapping_sub(t.1) as #repr_unsigned as usize]
                         }
                     }
