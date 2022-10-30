@@ -1,6 +1,6 @@
 # Changelog for enum-tools
 
-## upcoming
+## 0.5.1 -- 2022-10-30
 
 * Fix clippy warnings
 * Remove dependency remain
