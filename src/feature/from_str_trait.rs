@@ -108,6 +108,7 @@ impl FeatureFromStrTrait {
                                 use ::core::result::Result::{Ok, Err};
                                 for (i, n) in Self::#ident_table_name.iter().enumerate() {
                                     if s == *n {
+                                        // Safety: the number is known to be a valid enum
                                         return Ok(unsafe { ::core::mem::transmute((i as #repr).wrapping_add(#ident_enum::#ident_min as #repr)) });
                                     }
                                 }

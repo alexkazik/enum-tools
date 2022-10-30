@@ -113,6 +113,7 @@ impl FeatureFromStrFn {
                             use ::core::option::Option::{None, Some};
                             for (i, n) in Self::#ident_table_name.iter().enumerate() {
                                 if s == *n {
+                                    // Safety: the number is known to be a valid enum
                                     return Some(unsafe { ::core::mem::transmute((i as #repr).wrapping_add(#ident_enum::#ident_min as #repr)) });
                                 }
                             }

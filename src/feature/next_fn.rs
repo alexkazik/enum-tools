@@ -63,6 +63,7 @@ impl FeatureNextFn {
                     if (self as #repr) == (Self::#ident_max as #repr) {
                         None
                     } else {
+                        // Safety: the number is known to be a valid enum
                         Some(unsafe { ::core::mem::transmute((self as #repr) + 1) })
                     }
                 }

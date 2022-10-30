@@ -53,6 +53,7 @@ impl FeatureTryFromTrait {
                     fn try_from(value: #repr) -> ::core::result::Result<Self, Self::Error> {
                         use ::core::result::Result::{Err, Ok};
                         if (value as #repr) >= (Self::#ident_min as #repr) && (value as #repr) <= (Self::#ident_max as #repr) {
+                            // Safety: the number is known to be a valid enum
                             Ok(unsafe { ::core::mem::transmute(value as #repr) })
                         } else {
                             Err(())
@@ -70,6 +71,7 @@ impl FeatureTryFromTrait {
                         if (value as #repr) >= (Self::#ident_min as #repr) && (value as #repr) <= (Self::#ident_max as #repr) {
                             for r in Self::#ident_table_range {
                                 if r.0.contains(&value){
+                                    // Safety: the number is known to be a valid enum
                                     return Ok(unsafe { ::core::mem::transmute(value as #repr) });
                                 }
                             }

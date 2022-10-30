@@ -63,6 +63,7 @@ impl FeatureTryFromFn {
                 #vis fn #ident_try_from_fn(value: #repr) -> ::core::option::Option<Self> {
                     use ::core::option::Option::{None, Some};
                     if (value as #repr) >= (Self::#ident_min as #repr) && (value as #repr) <= (Self::#ident_max as #repr) {
+                        // Safety: the number is known to be a valid enum
                         Some(unsafe { ::core::mem::transmute(value as #repr) })
                     } else {
                         None
@@ -77,6 +78,7 @@ impl FeatureTryFromFn {
                     if (value as #repr) >= (Self::#ident_min as #repr) && (value as #repr) <= (Self::#ident_max as #repr) {
                         for r in Self::#ident_table_range {
                             if r.0.contains(&value){
+                                // Safety: the number is known to be a valid enum
                                 return Some(unsafe { ::core::mem::transmute(value as #repr) });
                             }
                         }

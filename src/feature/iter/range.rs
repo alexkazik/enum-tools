@@ -46,6 +46,7 @@ impl FeatureIter {
             #vis fn #ident_iter_fn() -> #ident_iter_struct {
                 use ::core::iter::Iterator;
                 #ident_iter_struct {
+                    // Safety: the number is known to be a valid enum
                     inner: (#start..=#end).map(|x| unsafe { ::core::mem::transmute(x) }),
                 }
             }
