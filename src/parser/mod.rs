@@ -51,8 +51,8 @@ impl Derive {
 
         let values = parse_values(&span, input.data, sorted);
 
-        let min_key = *values.keys().min().unwrap();
-        let max_key = *values.keys().max().unwrap();
+        let min_key = values.first().unwrap().0;
+        let max_key = values.last().unwrap().0;
 
         let num_values = values.len();
         if num_values >= u16::MAX.into() {
@@ -62,31 +62,26 @@ impl Derive {
             )
         }
 
-        let mut value_ranges = Vec::new();
-        let mut begin = None;
-        for i in min_key..=max_key {
-            if values.contains_key(&i) {
-                if begin.is_none() {
-                    begin = Some(i);
+        let value_ranges = {
+            let mut value_ranges = Vec::new();
+            let mut begin = min_key;
+            let mut last = begin;
+            for (i, _) in values.iter().skip(1) {
+                if *i != last + 1 {
+                    value_ranges.push((begin, last));
+                    begin = *i;
                 }
-            } else if let Some(b) = begin {
-                value_ranges.push((b, i - 1));
-                begin = None;
+                last = *i;
             }
-        }
-        value_ranges.push((begin.unwrap(), max_key));
+            value_ranges.push((begin, last));
+            value_ranges
+        };
 
         let mode = if value_ranges.len() == 1 {
             Mode::Gapless
         } else {
             Mode::WithHoles { value_ranges }
         };
-
-        let mut values = values
-            .iter()
-            .map(|(k, v)| (*k, v.clone()))
-            .collect::<Vec<_>>();
-        values.sort_by_key(|v| v.0);
 
         let derive = Derive {
             repr,

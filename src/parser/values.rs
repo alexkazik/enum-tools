@@ -5,7 +5,7 @@ use std::collections::HashMap;
 use syn::spanned::Spanned;
 use syn::{Data, Expr, ExprLit, ExprUnary, Fields, Ident, Lit, UnOp};
 
-pub(crate) fn parse_values(span: &Span, data: Data, sorted: FeatureSorted) -> HashMap<i64, Ident> {
+pub(crate) fn parse_values(span: &Span, data: Data, sorted: FeatureSorted) -> Vec<(i64, Ident)> {
     if let Data::Enum(data) = data {
         let mut values = HashMap::new();
         let mut last = -1i64;
@@ -69,6 +69,12 @@ pub(crate) fn parse_values(span: &Span, data: Data, sorted: FeatureSorted) -> Ha
                 }
             }
         }
+
+        let mut values = values
+            .iter()
+            .map(|(k, v)| (*k, v.clone()))
+            .collect::<Vec<_>>();
+        values.sort_by_key(|v| v.0);
 
         if values.is_empty() {
             abort!(span, "no variants found");
