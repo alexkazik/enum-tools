@@ -3,6 +3,7 @@
 ## upcoming
 
 * Add feature range_fn
+* Use syn-2.0
 
 ## 0.5.1 -- 2022-10-30
 

@@ -3,7 +3,7 @@ use proc_macro_error::abort;
 use std::collections::HashMap;
 use syn::punctuated::Punctuated;
 use syn::spanned::Spanned;
-use syn::{Lit, Path, PathArguments, PathSegment, VisPublic, VisRestricted, Visibility};
+use syn::{Lit, Path, PathArguments, PathSegment, VisRestricted, Visibility};
 
 pub(crate) struct Params {
     name: String,
@@ -124,7 +124,5 @@ fn vis_pub_crate() -> Visibility {
 }
 
 fn vis_pub() -> Visibility {
-    Visibility::Public(VisPublic {
-        pub_token: Default::default(),
-    })
+    Visibility::Public(Default::default())
 }
