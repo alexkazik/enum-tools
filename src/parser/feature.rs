@@ -2,6 +2,7 @@ use crate::parser::params::Params;
 use proc_macro_error::abort;
 use std::collections::HashMap;
 use syn::punctuated::Punctuated;
+use syn::spanned::Spanned;
 use syn::{Expr, ExprLit, Meta, MetaNameValue, Token};
 
 pub(crate) struct FeatureParser(HashMap<String, Params>);
@@ -31,7 +32,7 @@ impl FeatureParser {
                     params = Params::new(meta_list.path);
                     for nested_meta in nested {
                         if let Meta::Path(path) = nested_meta {
-                            let span = path.clone();
+                            let span = path.span();
                             if params.insert(path, None) {
                                 abort!(span, "duplicate parameter");
                             }
@@ -41,7 +42,7 @@ impl FeatureParser {
                             ..
                         }) = nested_meta
                         {
-                            let span = path.clone();
+                            let span = path.span();
                             if params.insert(path, Some(lit)) {
                                 abort!(span, "duplicate parameter");
                             }
