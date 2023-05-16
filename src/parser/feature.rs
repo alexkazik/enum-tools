@@ -1,3 +1,4 @@
+use crate::parser::error::Error;
 use crate::parser::params::Params;
 use proc_macro_error::abort;
 use std::collections::HashMap;
@@ -20,7 +21,7 @@ impl FeatureParser {
         if let Meta::List(meta_list) = meta {
             let nested = meta_list
                 .parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)
-                .unwrap_or_else(|e| abort!(meta_list, "meta parse error: {}", e));
+                .unwrap_or_else(|e| abort!(meta_list, Error::MetaParseError(e)));
             for outer in nested {
                 let mut params;
                 if let Meta::Path(path) = outer {
@@ -28,13 +29,13 @@ impl FeatureParser {
                 } else if let Meta::List(meta_list) = outer {
                     let nested = meta_list
                         .parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)
-                        .unwrap_or_else(|e| abort!(meta_list, "meta parse error: {}", e));
+                        .unwrap_or_else(|e| abort!(meta_list, Error::MetaParseError(e)));
                     params = Params::new(meta_list.path);
                     for nested_meta in nested {
                         if let Meta::Path(path) = nested_meta {
                             let span = path.span();
                             if params.insert(path, None) {
-                                abort!(span, "duplicate parameter");
+                                abort!(span, Error::DuplicateParameter);
                             }
                         } else if let Meta::NameValue(MetaNameValue {
                             path,
@@ -44,23 +45,23 @@ impl FeatureParser {
                         {
                             let span = path.span();
                             if params.insert(path, Some(lit)) {
-                                abort!(span, "duplicate parameter");
+                                abort!(span, Error::DuplicateParameter);
                             }
                         } else {
-                            abort!(nested_meta, "unsupported feature");
+                            abort!(nested_meta, Error::UnknownFeature);
                         }
                     }
                 } else {
-                    abort!(outer, "unsupported feature");
+                    abort!(outer, Error::UnknownFeature);
                 }
 
                 let span = params.span();
                 if self.insert(params) {
-                    abort!(span, "duplicate feature");
+                    abort!(span, Error::DuplicateFeature);
                 }
             }
         } else {
-            abort!(meta, "unsupported attribute type");
+            abort!(meta, Error::UnsupportedAttributeType);
         }
     }
 
@@ -70,7 +71,7 @@ impl FeatureParser {
 
     pub(crate) fn finish(self) {
         if let Some((_, params)) = self.0.into_iter().next() {
-            abort!(params.span(), "unexpected feature")
+            abort!(params.span(), Error::UnknownFeature)
         }
     }
 }

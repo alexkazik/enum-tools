@@ -1,3 +1,4 @@
+use crate::parser::error::Error;
 use proc_macro2::{Ident, Span};
 use proc_macro_error::abort;
 use std::collections::HashMap;
@@ -41,13 +42,13 @@ impl Params {
                 return (first.ident.to_string(), path.span());
             }
         }
-        abort!(path, "unsupported path");
+        abort!(path, Error::UnsupportedPath);
     }
 
     pub(crate) fn get_bool(&mut self, name: &str) -> bool {
         if let Some((_, lit)) = self.params.remove(name) {
             if let Some(lit) = lit {
-                abort!(lit.span(), "no value expected");
+                abort!(lit.span(), Error::UnexpectedLiteral);
             } else {
                 true
             }
@@ -61,7 +62,7 @@ impl Params {
             if let Some(Lit::Str(l)) = lit {
                 Some(l.value())
             } else {
-                abort!(path, "expected string");
+                abort!(path, Error::ExpectedLiteral("string"));
             }
         } else {
             None
@@ -75,10 +76,10 @@ impl Params {
                     "" => Some(vis_inherited()),
                     "pub(crate)" => Some(vis_pub_crate()),
                     "pub" => Some(vis_pub()),
-                    _ => abort!(path, "unsupported visibility"),
+                    _ => abort!(path, Error::UnsupportedVisibility),
                 }
             } else {
-                abort!(path, "expected string");
+                abort!(path, Error::ExpectedLiteral("string"));
             }
         } else {
             None
@@ -91,7 +92,7 @@ impl Params {
 
     pub(crate) fn finish<T>(self, value: T) -> T {
         if let Some((_, (param_path, _))) = self.params.into_iter().next() {
-            abort!(param_path, "unexpected parameter")
+            abort!(param_path, Error::UnknownParameter)
         } else {
             value
         }

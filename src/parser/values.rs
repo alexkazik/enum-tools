@@ -1,4 +1,5 @@
 use crate::feature::sorted::FeatureSorted;
+use crate::parser::error::Error;
 use proc_macro2::Span;
 use proc_macro_error::abort;
 use std::collections::HashMap;
@@ -14,13 +15,13 @@ pub(crate) fn parse_values(span: &Span, data: Data, sorted: FeatureSorted) -> Ve
         for mut v in data.variants {
             let span = v.span();
             if !matches!(v.fields, Fields::Unit) {
-                abort!(span, "only unit field items are allowed");
+                abort!(span, Error::OnlyUnitField);
             }
             if sorted.name {
                 let next_name = v.ident.to_string();
                 if let Some(last_name) = last_name {
                     if last_name >= next_name {
-                        abort!(span, "enums are not sorted by name");
+                        abort!(span, Error::FieldsNotNameSorted);
                     }
                 }
                 last_name = Some(next_name);
@@ -47,25 +48,25 @@ pub(crate) fn parse_values(span: &Span, data: Data, sorted: FeatureSorted) -> Ve
                             i = -i;
                         }
                         if sorted.value && !values.is_empty() && i < last {
-                            abort!(span, "enums are not sorted by value");
+                            abort!(span, Error::FieldsNotValueSorted);
                         }
                         if values.insert(i, v.ident).is_some() {
-                            abort!(span, "Duplicate value");
+                            abort!(span, Error::DuplicateValue);
                         }
                         last = i;
                     } else {
-                        abort!(span, "can't be parsed as i64");
+                        abort!(span, Error::NoI64);
                     }
                 } else {
-                    abort!(span, "only integer literals are allowed");
+                    abort!(span, Error::NotInteger);
                 }
             } else {
                 if last == i64::MAX {
-                    abort!(span, "i64 overflow");
+                    abort!(span, Error::I64Overflow);
                 }
                 last += 1;
                 if values.insert(last, v.ident).is_some() {
-                    abort!(span, "Duplicate value");
+                    abort!(span, Error::DuplicateValue);
                 }
             }
         }
@@ -77,11 +78,11 @@ pub(crate) fn parse_values(span: &Span, data: Data, sorted: FeatureSorted) -> Ve
         values.sort_by_key(|v| v.0);
 
         if values.is_empty() {
-            abort!(span, "no variants found");
+            abort!(span, Error::NoVariantsFound);
         }
 
         values
     } else {
-        abort!(span, "Only enums are supported");
+        abort!(span, Error::NoEnum);
     }
 }

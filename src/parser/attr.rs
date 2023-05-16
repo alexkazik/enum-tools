@@ -1,3 +1,4 @@
+use crate::parser::error::Error;
 use crate::parser::feature::FeatureParser;
 use proc_macro2::Span;
 use proc_macro_error::abort;
@@ -10,21 +11,18 @@ pub(crate) fn parse_attrs(span: &Span, attrs: Vec<Attribute>) -> (Ident, Feature
     for a in attrs {
         if a.path().is_ident("repr") {
             if let Some(repr) = repr {
-                abort!(repr, "duplicate repr attribute")
+                abort!(repr, Error::DuplicateReprAttribute)
             }
-            match a.parse_args::<Ident>() {
-                Ok(m) => repr = Some(m),
-                Err(e) => abort!(a, e),
-            }
+            repr = Some(
+                a.parse_args::<Ident>()
+                    .unwrap_or_else(|e| abort!(a, Error::MetaParseError(e))),
+            );
         } else if a.path().is_ident("enum_tools") {
             feature_parser.parse(a.meta)
         }
     }
 
-    let repr = match repr {
-        Some(r) => r,
-        None => abort!(span, "expected one repr attribute"),
-    };
+    let repr = repr.unwrap_or_else(|| abort!(span, Error::MissingReprAttribute));
 
     (repr, feature_parser)
 }

@@ -25,6 +25,7 @@ use syn::spanned::Spanned;
 use syn::{DeriveInput, Ident};
 
 pub(crate) mod attr;
+pub(crate) mod error;
 pub(crate) mod feature;
 pub(crate) mod params;
 pub(crate) mod values;
