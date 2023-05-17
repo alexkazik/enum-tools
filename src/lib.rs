@@ -1,3 +1,6 @@
+#![forbid(unsafe_code)]
+#![warn(missing_docs)]
+
 //! Automatically derive functions and trait implementations for enums.
 //!
 //! The enum must be field-less, has a primitive representation and be [`Copy`](::std::marker::Copy).

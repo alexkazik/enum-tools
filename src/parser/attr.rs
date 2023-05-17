@@ -4,7 +4,7 @@ use proc_macro2::Span;
 use proc_macro_error::abort;
 use syn::{Attribute, Ident};
 
-pub(crate) fn parse_attrs(span: &Span, attrs: Vec<Attribute>) -> (Ident, FeatureParser) {
+pub(crate) fn parse_attrs(span: Span, attrs: Vec<Attribute>) -> (Ident, FeatureParser) {
     let mut repr: Option<Ident> = None;
     let mut feature_parser = FeatureParser::new();
 
@@ -18,7 +18,7 @@ pub(crate) fn parse_attrs(span: &Span, attrs: Vec<Attribute>) -> (Ident, Feature
                     .unwrap_or_else(|e| abort!(a, Error::MetaParseError(e))),
             );
         } else if a.path().is_ident("enum_tools") {
-            feature_parser.parse(a.meta)
+            feature_parser.parse(a.meta);
         }
     }
 

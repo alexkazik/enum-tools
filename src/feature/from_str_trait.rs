@@ -77,7 +77,7 @@ impl FeatureFromStrTrait {
             FromStrMode::Auto => panic!("FromStrMode should've been resolved"),
             FromStrMode::Match => {
                 let mut matches = Vec::new();
-                for (_, v) in derive.values.iter() {
+                for (_, v) in &derive.values {
                     let name = v.to_string();
                     matches.push(quote! {
                         #name => Ok(#ident_enum::#v),

@@ -96,8 +96,7 @@ impl FeatureRangeFn {
         let vis = self.vis.as_ref().unwrap_or(&derive.vis_enum);
 
         let doc_inner = format!(
-            " An Iterator over a inclusive range of {}, in value order, similar to `..=`.",
-            ident_enum
+            " An Iterator over a inclusive range of {ident_enum}, in value order, similar to `..=`."
         );
 
         if derive.mode.is_gapless() {

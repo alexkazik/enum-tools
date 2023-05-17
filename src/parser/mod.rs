@@ -36,7 +36,7 @@ impl Derive {
         let vis_enum = input.vis;
         let ident_enum = input.ident;
 
-        let (repr, mut feature_parser) = parse_attrs(&span, input.attrs);
+        let (repr, mut feature_parser) = parse_attrs(span, input.attrs);
 
         let (repr_size_guessed, repr_unsigned) = match repr.to_string().as_str() {
             "u8" | "i8" => (1, "u8"),
@@ -51,7 +51,7 @@ impl Derive {
 
         let sorted = FeatureSorted::parse(&mut feature_parser);
 
-        let values = parse_values(&span, input.data, sorted);
+        let values = parse_values(span, input.data, sorted);
 
         let min_key = values.first().unwrap().0;
         let max_key = values.last().unwrap().0;
