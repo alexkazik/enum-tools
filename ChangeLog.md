@@ -1,6 +1,6 @@
 # Changelog for enum-tools
 
-## upcoming
+## 0.5.2 -- 2023-05-17
 
 * Add feature range_fn
 * Use syn-2.0
