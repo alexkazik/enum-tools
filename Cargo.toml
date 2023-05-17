@@ -14,7 +14,7 @@ exclude = ["/.github"]
 proc-macro = true
 
 [dependencies]
-proc-macro2 = "1.0"
-proc-macro-error = { version = "1.0", default-features = false }
-quote = "1.0"
-syn = { version = "2.0", default-features = false, features = ["derive", "parsing", "printing", "proc-macro"] }
+proc-macro2 = "1.0.52"
+proc-macro-error = { version = "1.0.4", default-features = false }
+quote = "1.0.26"
+syn = { version = "2.0.0", default-features = false, features = ["derive", "parsing", "printing", "proc-macro"] }
