@@ -39,7 +39,6 @@ impl FeatureTableRange {
                 });
                 ofs += e0 - b0 + 1;
             }
-            let repr = repr;
 
             if with_offset {
                 quote! {
