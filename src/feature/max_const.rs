@@ -40,7 +40,7 @@ impl FeatureMaxConst {
         let Names { ident_max, .. } = names;
         let vis = self.vis.as_ref().unwrap_or(&derive.vis_enum);
 
-        let max_value = &derive.values.last().unwrap().1;
+        let (_, (max_value, _)) = &derive.values.last().unwrap();
         quote! {
             /// The last element of this enum by value
             #vis const #ident_max : #ident_enum = #ident_enum::#max_value;

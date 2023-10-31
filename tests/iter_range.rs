@@ -7,6 +7,7 @@ mod eg {
     #[enum_tools(iter(mode = "range"))]
     #[repr(i8)]
     pub(crate) enum EG {
+        #[enum_tools(rename = "A*")]
         A,
         B,
         C,

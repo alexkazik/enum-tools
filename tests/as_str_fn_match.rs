@@ -7,6 +7,7 @@ mod eg {
     #[enum_tools(as_str(mode = "match"))]
     #[repr(i8)]
     pub(crate) enum EG {
+        #[enum_tools(rename = "A*")]
         A,
         B,
         C,
@@ -23,6 +24,7 @@ mod eh {
     #[enum_tools(as_str(mode = "match"))]
     #[repr(i8)]
     pub(crate) enum EH {
+        #[enum_tools(rename = "A*")]
         A = 0,
         B = 9,
         C = 2,
@@ -33,7 +35,7 @@ mod eh {
 #[test]
 fn as_str_fn_match_gapless() {
     use eg::EG;
-    assert_eq!(EG::A.as_str(), "A");
+    assert_eq!(EG::A.as_str(), "A*");
     assert_eq!(EG::B.as_str(), "B");
     assert_eq!(EG::C.as_str(), "C");
     assert_eq!(EG::D.as_str(), "D");
@@ -42,7 +44,7 @@ fn as_str_fn_match_gapless() {
 #[test]
 fn as_str_fn_match_with_holes() {
     use eh::EH;
-    assert_eq!(EH::A.as_str(), "A");
+    assert_eq!(EH::A.as_str(), "A*");
     assert_eq!(EH::B.as_str(), "B");
     assert_eq!(EH::C.as_str(), "C");
     assert_eq!(EH::D.as_str(), "D");

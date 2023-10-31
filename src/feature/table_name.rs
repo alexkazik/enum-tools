@@ -24,8 +24,7 @@ impl FeatureTableName {
         let table = derive
             .values
             .iter()
-            .map(|(_, v)| {
-                let name = v.to_string();
+            .map(|(_, (_, name))| {
                 quote! {#name}
             })
             .collect::<Vec<_>>();

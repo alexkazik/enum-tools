@@ -7,6 +7,7 @@ mod eg {
     #[enum_tools(IntoStr)]
     #[repr(i8)]
     pub(crate) enum EG {
+        #[enum_tools(rename = "A*")]
         A,
         B,
         C,
@@ -23,6 +24,7 @@ mod eh {
     #[enum_tools(IntoStr)]
     #[repr(i8)]
     pub(crate) enum EH {
+        #[enum_tools(rename = "A*")]
         A = 0,
         B = 9,
         C = 2,
@@ -33,7 +35,7 @@ mod eh {
 #[test]
 fn into_str_trait_gapless() {
     use eg::EG;
-    assert_eq!(<EG as Into<&'static str>>::into(EG::A), "A");
+    assert_eq!(<EG as Into<&'static str>>::into(EG::A), "A*");
     assert_eq!(<EG as Into<&'static str>>::into(EG::B), "B");
     assert_eq!(<EG as Into<&str>>::into(EG::C), "C");
     assert_eq!(<EG as Into<&str>>::into(EG::D), "D");
@@ -42,7 +44,7 @@ fn into_str_trait_gapless() {
 #[test]
 fn into_str_trait_with_holes() {
     use eh::EH;
-    assert_eq!(<EH as Into<&'static str>>::into(EH::A), "A");
+    assert_eq!(<EH as Into<&'static str>>::into(EH::A), "A*");
     assert_eq!(<EH as Into<&'static str>>::into(EH::B), "B");
     assert_eq!(<EH as Into<&str>>::into(EH::C), "C");
     assert_eq!(<EH as Into<&str>>::into(EH::D), "D");

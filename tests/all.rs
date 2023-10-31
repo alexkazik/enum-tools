@@ -12,6 +12,7 @@ mod eg {
     #[enum_tools(names, next, next_back, range, TryFrom, try_from)]
     #[repr(i8)]
     pub(crate) enum EG {
+        #[enum_tools(rename = "A*")]
         A,
         B,
         C,
@@ -33,6 +34,7 @@ mod eh {
     #[enum_tools(names, next, next_back, range, TryFrom, try_from)]
     #[repr(i8)]
     pub(crate) enum EH {
+        #[enum_tools(rename = "A*")]
         A = 0,
         B = 9,
         C = 2,

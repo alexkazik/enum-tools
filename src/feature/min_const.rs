@@ -40,7 +40,7 @@ impl FeatureMinConst {
         let Names { ident_min, .. } = names;
         let vis = self.vis.as_ref().unwrap_or(&derive.vis_enum);
 
-        let min_value = &derive.values.first().unwrap().1;
+        let (_, (min_value, _)) = &derive.values.first().unwrap();
         quote! {
             /// The first element of this enum by value
             #vis const #ident_min : #ident_enum = #ident_enum::#min_value;

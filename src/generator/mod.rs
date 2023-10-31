@@ -33,7 +33,7 @@ pub(crate) struct Derive {
     pub(crate) min_key: i64,
     pub(crate) max_key: i64,
     pub(crate) num_values: usize,
-    pub(crate) values: Vec<(i64, Ident)>,
+    pub(crate) values: Vec<(i64, (Ident, String))>,
     pub(crate) mode: Mode,
 }
 

@@ -4,9 +4,13 @@ use proc_macro2::Span;
 use proc_macro_error::abort;
 use std::collections::HashMap;
 use syn::spanned::Spanned;
-use syn::{Data, Expr, ExprLit, ExprUnary, Fields, Ident, Lit, UnOp};
+use syn::{Data, Expr, ExprLit, ExprUnary, Fields, Ident, Lit, Meta, MetaNameValue, UnOp};
 
-pub(crate) fn parse_values(span: Span, data: Data, sorted: FeatureSorted) -> Vec<(i64, Ident)> {
+pub(crate) fn parse_values(
+    span: Span,
+    data: Data,
+    sorted: FeatureSorted,
+) -> Vec<(i64, (Ident, String))> {
     if let Data::Enum(data) = data {
         let mut values = HashMap::new();
         let mut last = -1i64;
@@ -17,8 +21,38 @@ pub(crate) fn parse_values(span: Span, data: Data, sorted: FeatureSorted) -> Vec
             if !matches!(v.fields, Fields::Unit) {
                 abort!(span, Error::OnlyUnitField);
             }
+            let mut name = v.ident.to_string();
+            for a in v.attrs {
+                if a.path().is_ident("enum_tools") {
+                    if let Meta::List(meta_list) = &a.meta {
+                        let nested = meta_list
+                            .parse_args()
+                            .unwrap_or_else(|e| abort!(meta_list, Error::MetaParseError(e)));
+                        if let Meta::NameValue(MetaNameValue {
+                            path,
+                            value:
+                                Expr::Lit(ExprLit {
+                                    lit: Lit::Str(lit_str),
+                                    ..
+                                }),
+                            ..
+                        }) = nested
+                        {
+                            if !path.is_ident("rename") {
+                                abort!(a, Error::UnsupportedAttributeType);
+                            } else {
+                                name = lit_str.value();
+                            }
+                        } else {
+                            abort!(a, Error::UnsupportedAttributeType);
+                        }
+                    } else {
+                        abort!(a, Error::UnsupportedAttributeType);
+                    }
+                }
+            }
             if sorted.name {
-                let next_name = v.ident.to_string();
+                let next_name = name.clone();
                 if let Some(last_name) = last_name {
                     if last_name >= next_name {
                         abort!(span, Error::FieldsNotNameSorted);
@@ -50,7 +84,7 @@ pub(crate) fn parse_values(span: Span, data: Data, sorted: FeatureSorted) -> Vec
                         if sorted.value && !values.is_empty() && i < last {
                             abort!(span, Error::FieldsNotValueSorted);
                         }
-                        if values.insert(i, v.ident).is_some() {
+                        if values.insert(i, (v.ident, name)).is_some() {
                             abort!(span, Error::DuplicateValue);
                         }
                         last = i;
@@ -65,7 +99,7 @@ pub(crate) fn parse_values(span: Span, data: Data, sorted: FeatureSorted) -> Vec
                     abort!(span, Error::I64Overflow);
                 }
                 last += 1;
-                if values.insert(last, v.ident).is_some() {
+                if values.insert(last, (v.ident, name)).is_some() {
                     abort!(span, Error::DuplicateValue);
                 }
             }

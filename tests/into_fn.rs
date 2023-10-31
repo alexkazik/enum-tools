@@ -7,6 +7,7 @@ mod eg {
     #[enum_tools(into)]
     #[repr(i8)]
     pub(crate) enum EG {
+        #[enum_tools(rename = "A*")]
         A,
         B,
         C,
@@ -23,6 +24,7 @@ mod eh {
     #[enum_tools(into)]
     #[repr(i8)]
     pub(crate) enum EH {
+        #[enum_tools(rename = "A*")]
         A = 0,
         B = 9,
         C = 2,

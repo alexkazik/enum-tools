@@ -122,9 +122,9 @@ mod parser;
 /// #[derive(Clone, Copy, EnumTools, PartialEq)]
 /// #[enum_tools(as_str, Debug, next, next_back(name = "pred"))]
 /// #[repr(usize)]
-/// pub enum MyEnum { A, B, C }
+/// pub enum MyEnum { A, #[enum_tools(rename = "B*")] B, C }
 ///
-/// assert_eq!(MyEnum::B.as_str(), "B");
+/// assert_eq!(MyEnum::B.as_str(), "B*");
 /// assert_eq!(MyEnum::A.next(), MyEnum::C.pred());
 /// ```
 ///
@@ -182,6 +182,10 @@ mod parser;
 /// Example:
 /// `#[enum_tools(sorted(name, value))]`
 ///
+/// # Value attributes
+///
+/// The only supported value attribute is `rename` (see example above).
+/// This will affect all from/to str(ing) functions including the `names` iterator.  
 ///
 /// # Function/Constant Features
 ///

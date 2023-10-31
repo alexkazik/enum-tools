@@ -13,7 +13,7 @@ impl FeatureIter {
         derive: &Derive,
         names: &Names,
     ) -> (TokenStream, TokenStream) {
-        let enums = derive.values.iter().map(|x| &x.1);
+        let enums = derive.values.iter().map(|(_, (v, _))| v);
         let num_values = LitInt::new(&derive.num_values.to_string(), Span::call_site());
 
         let Derive { ident_enum, .. } = derive;

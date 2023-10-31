@@ -7,6 +7,7 @@ mod eg {
     #[enum_tools(Debug)]
     #[repr(i8)]
     pub(crate) enum EG {
+        #[enum_tools(rename = "A*")]
         A,
         B,
         C,
@@ -23,6 +24,7 @@ mod eh {
     #[enum_tools(Debug)]
     #[repr(i8)]
     pub(crate) enum EH {
+        #[enum_tools(rename = "A*")]
         A = 0,
         B = 9,
         C = 2,
@@ -33,7 +35,7 @@ mod eh {
 #[test]
 fn debug_trait_gapless() {
     use eg::EG;
-    assert_eq!(format!("{:?}", EG::A), "A");
+    assert_eq!(format!("{:?}", EG::A), "A*");
     assert_eq!(format!("{:?}", EG::B), "B");
     assert_eq!(format!("{:?}", EG::C), "C");
     assert_eq!(format!("{:?}", EG::D), "D");
@@ -42,7 +44,7 @@ fn debug_trait_gapless() {
 #[test]
 fn debug_trait_with_holes() {
     use eh::EH;
-    assert_eq!(format!("{:?}", EH::A), "A");
+    assert_eq!(format!("{:?}", EH::A), "A*");
     assert_eq!(format!("{:?}", EH::B), "B");
     assert_eq!(format!("{:?}", EH::C), "C");
     assert_eq!(format!("{:?}", EH::D), "D");

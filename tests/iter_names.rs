@@ -8,6 +8,7 @@ mod eg {
     #[enum_tools(names)]
     #[repr(i8)]
     pub(crate) enum EG {
+        #[enum_tools(rename = "A*")]
         A,
         B,
         C,
@@ -25,6 +26,7 @@ mod eh {
     #[enum_tools(names)]
     #[repr(i8)]
     pub(crate) enum EH {
+        #[enum_tools(rename = "A*")]
         A = 0,
         B = 9,
         C = 2,
@@ -35,11 +37,11 @@ mod eh {
 #[test]
 fn iter_names_gapless() {
     use eg::EG;
-    assert_eq!(EG::names().collect::<Vec<_>>(), vec!["A", "B", "C", "D"]);
+    assert_eq!(EG::names().collect::<Vec<_>>(), vec!["A*", "B", "C", "D"]);
 }
 
 #[test]
 fn iter_names_with_holes() {
     use eh::EH;
-    assert_eq!(EH::names().collect::<Vec<_>>(), vec!["A", "D", "C", "B"]);
+    assert_eq!(EH::names().collect::<Vec<_>>(), vec!["A*", "D", "C", "B"]);
 }

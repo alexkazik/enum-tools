@@ -28,7 +28,7 @@ impl FeatureTableEnum {
         let table = derive
             .values
             .iter()
-            .map(|(_, v)| {
+            .map(|(_, (v, _))| {
                 quote! {#ident_enum::#v}
             })
             .collect::<Vec<_>>();

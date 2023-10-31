@@ -91,8 +91,7 @@ impl FeatureAsStrFn {
             AsStrMode::Auto => panic!("AsStrMode should've been resolved"),
             AsStrMode::Match => {
                 let mut matches = Vec::new();
-                for (_, v) in &derive.values {
-                    let name = v.to_string();
+                for (_, (v, name)) in &derive.values {
                     matches.push(quote! {
                         #ident_enum::#v => #name,
                     });
