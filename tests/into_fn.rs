@@ -31,7 +31,7 @@ mod eh {
 }
 
 #[test]
-fn to_fn_gapless() {
+fn into_fn_gapless() {
     use eg::EG;
     assert_eq!(EG::A.into(), 0);
     assert_eq!(EG::B.into(), 1);
@@ -40,7 +40,7 @@ fn to_fn_gapless() {
 }
 
 #[test]
-fn to_fn_with_holes() {
+fn into_fn_with_holes() {
     use eh::EH;
     assert_eq!(EH::A.into(), 0);
     assert_eq!(EH::B.into(), 9);

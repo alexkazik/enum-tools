@@ -31,7 +31,7 @@ mod eh {
 }
 
 #[test]
-fn try_from_gapless() {
+fn try_from_trait_gapless() {
     use eg::EG;
     assert_eq!(EG::try_from(0), Ok(EG::A));
     assert_eq!(EG::try_from(1), Ok(EG::B));
@@ -46,7 +46,7 @@ fn try_from_gapless() {
 }
 
 #[test]
-fn try_from_with_holes() {
+fn try_from_trait_with_holes() {
     use eh::EH;
     assert_eq!(EH::try_from(0), Ok(EH::A));
     assert_eq!(EH::try_from(9), Ok(EH::B));

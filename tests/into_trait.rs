@@ -31,7 +31,7 @@ mod eh {
 }
 
 #[test]
-fn to_gapless() {
+fn into_trait_gapless() {
     use eg::EG;
     assert_eq!(i8::from(EG::A), 0);
     assert_eq!(i8::from(EG::B), 1);
@@ -40,7 +40,7 @@ fn to_gapless() {
 }
 
 #[test]
-fn to_with_holes() {
+fn into_trait_with_holes() {
     use eh::EH;
     assert_eq!(i8::from(EH::A), 0);
     assert_eq!(i8::from(EH::B), 9);

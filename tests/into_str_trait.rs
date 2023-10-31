@@ -31,7 +31,7 @@ mod eh {
 }
 
 #[test]
-fn as_str_table_gapless() {
+fn into_str_trait_gapless() {
     use eg::EG;
     assert_eq!(<EG as Into<&'static str>>::into(EG::A), "A");
     assert_eq!(<EG as Into<&'static str>>::into(EG::B), "B");
@@ -40,7 +40,7 @@ fn as_str_table_gapless() {
 }
 
 #[test]
-fn as_str_table_with_holes() {
+fn into_str_trait_with_holes() {
     use eh::EH;
     assert_eq!(<EH as Into<&'static str>>::into(EH::A), "A");
     assert_eq!(<EH as Into<&'static str>>::into(EH::B), "B");

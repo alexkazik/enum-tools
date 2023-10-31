@@ -33,7 +33,7 @@ mod eh {
 use core::str::FromStr;
 
 #[test]
-fn as_str_match_gapless() {
+fn from_str_trait_match_gapless() {
     use eg::EG;
     assert_eq!(EG::from_str("A"), Ok(EG::A));
     assert_eq!(EG::from_str("B"), Ok(EG::B));
@@ -43,7 +43,7 @@ fn as_str_match_gapless() {
 }
 
 #[test]
-fn as_str_match_with_holes() {
+fn from_str_trait_match_holes() {
     use eh::EH;
     assert_eq!(EH::from_str("A"), Ok(EH::A));
     assert_eq!(EH::from_str("B"), Ok(EH::B));

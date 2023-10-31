@@ -31,7 +31,7 @@ mod eh {
 }
 
 #[test]
-fn display_gapless() {
+fn display_trait_gapless() {
     use eg::EG;
     assert_eq!(format!("{}", EG::A), "A");
     assert_eq!(format!("{}", EG::B), "B");
@@ -40,7 +40,7 @@ fn display_gapless() {
 }
 
 #[test]
-fn display_with_holes() {
+fn display_trait_with_holes() {
     use eh::EH;
     assert_eq!(format!("{}", EH::A), "A");
     assert_eq!(format!("{}", EH::B), "B");

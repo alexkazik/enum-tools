@@ -31,7 +31,7 @@ mod eh {
 }
 
 #[test]
-fn as_str_match_gapless() {
+fn from_str_fn_table_gapless() {
     use eg::EG;
     assert_eq!(EG::from_str("A"), Some(EG::A));
     assert_eq!(EG::from_str("B"), Some(EG::B));
@@ -41,7 +41,7 @@ fn as_str_match_gapless() {
 }
 
 #[test]
-fn as_str_match_with_holes() {
+fn from_str_fn_table_with_holes() {
     use eh::EH;
     assert_eq!(EH::from_str("A"), Some(EH::A));
     assert_eq!(EH::from_str("B"), Some(EH::B));

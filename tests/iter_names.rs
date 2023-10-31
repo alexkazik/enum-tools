@@ -33,13 +33,13 @@ mod eh {
 }
 
 #[test]
-fn iter_table_gapless() {
+fn iter_names_gapless() {
     use eg::EG;
     assert_eq!(EG::names().collect::<Vec<_>>(), vec!["A", "B", "C", "D"]);
 }
 
 #[test]
-fn iter_table_with_holes() {
+fn iter_names_with_holes() {
     use eh::EH;
     assert_eq!(EH::names().collect::<Vec<_>>(), vec!["A", "D", "C", "B"]);
 }

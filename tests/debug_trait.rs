@@ -31,7 +31,7 @@ mod eh {
 }
 
 #[test]
-fn debug_gapless() {
+fn debug_trait_gapless() {
     use eg::EG;
     assert_eq!(format!("{:?}", EG::A), "A");
     assert_eq!(format!("{:?}", EG::B), "B");
@@ -40,7 +40,7 @@ fn debug_gapless() {
 }
 
 #[test]
-fn debug_with_holes() {
+fn debug_trait_with_holes() {
     use eh::EH;
     assert_eq!(format!("{:?}", EH::A), "A");
     assert_eq!(format!("{:?}", EH::B), "B");

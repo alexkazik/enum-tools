@@ -31,7 +31,7 @@ mod eh {
 }
 
 #[test]
-fn as_str_table_gapless() {
+fn as_str_fn_table_gapless() {
     use eg::EG;
     assert_eq!(EG::A.as_str(), "A");
     assert_eq!(EG::B.as_str(), "B");
@@ -40,7 +40,7 @@ fn as_str_table_gapless() {
 }
 
 #[test]
-fn as_str_table_with_holes() {
+fn as_str_fn_table_with_holes() {
     use eh::EH;
     assert_eq!(EH::A.as_str(), "A");
     assert_eq!(EH::B.as_str(), "B");
