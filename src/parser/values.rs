@@ -52,13 +52,12 @@ pub(crate) fn parse_values(
                 }
             }
             if sorted.name {
-                let next_name = name.clone();
                 if let Some(last_name) = last_name {
-                    if last_name >= next_name {
+                    if last_name >= name {
                         abort!(span, Error::FieldsNotNameSorted);
                     }
                 }
-                last_name = Some(next_name);
+                last_name = Some(name.clone());
             }
             if let Some((_, d)) = v.discriminant.take() {
                 // check if number is negated
