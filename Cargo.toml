@@ -8,6 +8,7 @@ repository = "https://github.com/alexkazik/enum-tools"
 license = "MIT"
 keywords = ["enum", "derive", "primitive"]
 categories = ["rust-patterns"]
+readme = "README.md"
 exclude = ["/.github"]
 
 [lib]

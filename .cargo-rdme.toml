@@ -1,4 +1,3 @@
-readme-path = "README.md"
 line-terminator = "lf"
 
 [entrypoint]
