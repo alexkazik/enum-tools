@@ -1,5 +1,6 @@
 #![forbid(unsafe_code)]
 #![warn(missing_docs)]
+#![allow(rustdoc::redundant_explicit_links)]
 
 //! Automatically derive functions and trait implementations for enums.
 //!
