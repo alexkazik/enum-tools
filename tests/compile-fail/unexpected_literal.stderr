@@ -1,0 +1,5 @@
+error: unexpected literal
+ --> tests/compile-fail/unexpected_literal.rs:6:28
+  |
+6 | #[enum_tools(sorted(name = 6))]
+  |                            ^

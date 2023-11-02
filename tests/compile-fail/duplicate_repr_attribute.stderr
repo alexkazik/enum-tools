@@ -1,0 +1,17 @@
+error: duplicate repr attribute
+ --> tests/compile-fail/duplicate_repr_attribute.rs:6:8
+  |
+6 | #[repr(i8)]
+  |        ^^
+
+error[E0566]: conflicting representation hints
+ --> tests/compile-fail/duplicate_repr_attribute.rs:6:8
+  |
+6 | #[repr(i8)]
+  |        ^^
+7 | #[repr(i8)]
+  |        ^^
+  |
+  = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+  = note: for more information, see issue #68585 <https://github.com/rust-lang/rust/issues/68585>
+  = note: `#[deny(conflicting_repr_hints)]` on by default

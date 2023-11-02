@@ -1,0 +1,17 @@
+error: Duplicate value
+  --> tests/compile-fail/duplicate_value.rs:12:5
+   |
+12 |     D = 9,
+   |     ^
+
+error[E0081]: discriminant value `9` assigned more than once
+  --> tests/compile-fail/duplicate_value.rs:7:1
+   |
+7  | pub(crate) enum EG {
+   | ^^^^^^^^^^^^^^^^^^
+...
+10 |     B = 9,
+   |         - `9` assigned here
+11 |     C = 2,
+12 |     D = 9,
+   |         - `9` assigned here

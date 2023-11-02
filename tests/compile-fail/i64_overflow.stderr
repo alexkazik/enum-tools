@@ -1,0 +1,5 @@
+error: i64 overflow
+  --> tests/compile-fail/i64_overflow.rs:11:5
+   |
+11 |     C,
+   |     ^

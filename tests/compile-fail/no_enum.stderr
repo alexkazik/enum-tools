@@ -1,0 +1,13 @@
+error: only enums are supported
+ --> tests/compile-fail/no_enum.rs:6:1
+  |
+6 | #[repr(i8)]
+  | ^
+
+error[E0517]: attribute should be applied to an enum
+ --> tests/compile-fail/no_enum.rs:6:8
+  |
+6 | #[repr(i8)]
+  |        ^^
+7 | pub(crate) struct EG();
+  | ----------------------- not an enum

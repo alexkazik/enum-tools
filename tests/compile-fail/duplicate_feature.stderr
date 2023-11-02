@@ -1,0 +1,5 @@
+error: duplicate feature
+ --> tests/compile-fail/duplicate_feature.rs:6:28
+  |
+6 | #[enum_tools(sorted(name), sorted(name))]
+  |                            ^^^^^^

@@ -1,0 +1,5 @@
+error: variants are not sorted by value
+  --> tests/compile-fail/fields_not_value_sorted.rs:13:5
+   |
+13 |     D = -3,
+   |     ^

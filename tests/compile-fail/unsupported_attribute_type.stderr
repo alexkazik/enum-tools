@@ -1,0 +1,35 @@
+error: unsupported attribute type
+ --> tests/compile-fail/unsupported_attribute_type.rs:6:14
+  |
+6 | #[enum_tools(literal = "x", sorted(y=(z)))]
+  |              ^^^^^^^^^^^^^
+
+error: unsupported attribute type
+ --> tests/compile-fail/unsupported_attribute_type.rs:6:36
+  |
+6 | #[enum_tools(literal = "x", sorted(y=(z)))]
+  |                                    ^^^^^
+
+error: unsupported attribute type
+ --> tests/compile-fail/unsupported_attribute_type.rs:7:3
+  |
+7 | #[enum_tools = "bad"]
+  |   ^^^^^^^^^^^^^^^^^^
+
+error: unsupported attribute type
+  --> tests/compile-fail/unsupported_attribute_type.rs:12:5
+   |
+12 |     #[enum_tools = "rename"]
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: unsupported attribute type
+  --> tests/compile-fail/unsupported_attribute_type.rs:14:5
+   |
+14 |     #[enum_tools(other = "A*")]
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: unsupported attribute type
+  --> tests/compile-fail/unsupported_attribute_type.rs:16:5
+   |
+16 |     #[enum_tools(rename(y=z))]
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -1,0 +1,5 @@
+error: variants are not sorted by name
+  --> tests/compile-fail/fields_not_name_sorted.rs:11:5
+   |
+11 |     B,
+   |     ^

@@ -1,0 +1,5 @@
+error: can't be parsed as i64
+  --> tests/compile-fail/no_i64.rs:12:5
+   |
+12 |     D = 0xf000_0000_0000_0000,
+   |     ^

@@ -1,0 +1,5 @@
+error: missing repr attribute
+ --> tests/compile-fail/missing_repr_attribute.rs:6:1
+  |
+6 | pub(crate) enum EG {
+  | ^^^

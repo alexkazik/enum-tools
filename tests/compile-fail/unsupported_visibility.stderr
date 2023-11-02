@@ -1,0 +1,5 @@
+error: unsupported visibility
+ --> tests/compile-fail/unsupported_visibility.rs:6:24
+  |
+6 | #[enum_tools(MIN(vis = "NONE"))]
+  |                        ^^^^^^

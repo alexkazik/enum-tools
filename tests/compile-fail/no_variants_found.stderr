@@ -1,0 +1,13 @@
+error: no variants found
+ --> tests/compile-fail/no_variants_found.rs:6:1
+  |
+6 | #[repr(i8)]
+  | ^
+
+error[E0084]: unsupported representation for zero-variant enum
+ --> tests/compile-fail/no_variants_found.rs:6:1
+  |
+6 | #[repr(i8)]
+  | ^^^^^^^^^^^
+7 | pub(crate) enum EG {}
+  | ------------------ zero-variant enum

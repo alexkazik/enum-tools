@@ -1,0 +1,5 @@
+error: duplicate parameter
+ --> tests/compile-fail/duplicate_parameter.rs:6:27
+  |
+6 | #[enum_tools(sorted(name, name))]
+  |                           ^^^^

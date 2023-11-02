@@ -31,4 +31,10 @@ else
 fi
 
 # tests
-cargo $TOOLCHAIN test --release -- --include-ignored || exit 1
+if test "$TOOLCHAIN" = "+nightly"
+then
+  cargo $TOOLCHAIN test --release || exit 1
+  echo "Skipping 'compile-fail' tests since it's maybe different on nightly, try '$0 +stable'"
+else
+  cargo $TOOLCHAIN test --release -- --include-ignored || exit 1
+fi

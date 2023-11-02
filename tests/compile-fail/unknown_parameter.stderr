@@ -1,0 +1,5 @@
+error: unknown parameter
+ --> tests/compile-fail/unknown_parameter.rs:6:21
+  |
+6 | #[enum_tools(sorted(unknown))]
+  |                     ^^^^^^^

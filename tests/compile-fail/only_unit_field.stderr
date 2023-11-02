@@ -1,0 +1,5 @@
+error: only unit field items are allowed
+  --> tests/compile-fail/only_unit_field.rs:10:5
+   |
+10 |     B(bool),
+   |     ^
