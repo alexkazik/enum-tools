@@ -19,7 +19,7 @@ checksum = "86e3bdc80eee6e16b2b6b0f87fbc98c04bee3455e35174c0de1a125d0688c632"
 
 [[package]]
 name = "enum-tools"
-version = "0.5.2"
+version = "0.5.3"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",

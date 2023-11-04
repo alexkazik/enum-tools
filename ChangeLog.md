@@ -1,5 +1,11 @@
 # Changelog for enum-tools
 
+## 0.5.3 -- 2023-11-04
+
+* Add support to rename fields
+* Improve error handling
+* Several small optimisations
+
 ## 0.5.2 -- 2023-05-17
 
 * Add feature range_fn
