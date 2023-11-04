@@ -1,7 +1,6 @@
 use std::fmt::{Display, Formatter};
 
 #[allow(clippy::enum_variant_names)]
-#[derive(Debug)]
 pub(crate) enum Error<'a> {
     DuplicateFeature,
     DuplicateParameter,
