@@ -63,7 +63,10 @@ impl Params {
             if let Some(Lit::Str(l)) = lit {
                 Some(l.value())
             } else {
-                emit_error!(path, Error::ExpectedLiteral("string"));
+                emit_error!(
+                    lit.map_or_else(|| path.span(), |l| l.span()),
+                    Error::ExpectedLiteral("string")
+                );
                 None
             }
         } else {
@@ -79,7 +82,7 @@ impl Params {
                     "pub(crate)" => Some(vis_pub_crate()),
                     "pub" => Some(vis_pub()),
                     _ => {
-                        emit_error!(path, Error::UnsupportedVisibility);
+                        emit_error!(l, Error::UnsupportedVisibility);
                         None
                     }
                 }

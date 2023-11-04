@@ -32,7 +32,7 @@ impl Display for Error<'_> {
             Error::DuplicateParameter => write!(f, "duplicate parameter"),
             Error::DuplicateReprAttribute => write!(f, "duplicate repr attribute"),
             Error::DuplicateValue => write!(f, "Duplicate value"),
-            Error::ExpectedLiteral(p) => write!(f, "expected literal: {p} (or no literal)"),
+            Error::ExpectedLiteral(p) => write!(f, "expected literal: {p}"),
             Error::FieldsNotNameSorted => write!(f, "variants are not sorted by name"),
             Error::FieldsNotValueSorted => write!(f, "variants are not sorted by value"),
             Error::I64Overflow => write!(f, "i64 overflow"),

@@ -48,13 +48,13 @@ impl FeatureParser {
                                 emit_error!(span, Error::DuplicateParameter);
                             }
                         } else {
-                            emit_error!(nested_meta, Error::UnknownFeature);
+                            emit_error!(nested_meta, Error::UnsupportedAttributeType);
                         }
                     }
                     params = Some(new_params);
                 } else {
                     params = None;
-                    emit_error!(outer, Error::UnknownFeature);
+                    emit_error!(outer, Error::UnsupportedAttributeType);
                 }
 
                 if let Some(params) = params {
