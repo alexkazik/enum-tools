@@ -1,7 +1,7 @@
 use crate::feature::sorted::FeatureSorted;
 use crate::parser::error::Error;
 use proc_macro2::Span;
-use proc_macro_error::abort;
+use proc_macro_error::{abort, emit_error};
 use std::collections::HashMap;
 use syn::spanned::Spanned;
 use syn::{Data, Expr, ExprLit, ExprUnary, Fields, Ident, Lit, Meta, MetaNameValue, UnOp};
@@ -19,7 +19,7 @@ pub(crate) fn parse_values(
         for mut v in data.variants {
             let span = v.span();
             if !matches!(v.fields, Fields::Unit) {
-                abort!(span, Error::OnlyUnitField);
+                emit_error!(span, Error::OnlyUnitField);
             }
             let mut name = v.ident.to_string();
             for a in v.attrs {
@@ -39,22 +39,22 @@ pub(crate) fn parse_values(
                         }) = nested
                         {
                             if !path.is_ident("rename") {
-                                abort!(a, Error::UnsupportedAttributeType);
+                                emit_error!(a, Error::UnsupportedAttributeType);
                             } else {
                                 name = lit_str.value();
                             }
                         } else {
-                            abort!(a, Error::UnsupportedAttributeType);
+                            emit_error!(a, Error::UnsupportedAttributeType);
                         }
                     } else {
-                        abort!(a, Error::UnsupportedAttributeType);
+                        emit_error!(a, Error::UnsupportedAttributeType);
                     }
                 }
             }
             if sorted.name {
                 if let Some(last_name) = last_name {
                     if last_name >= name {
-                        abort!(span, Error::FieldsNotNameSorted);
+                        emit_error!(span, Error::FieldsNotNameSorted);
                     }
                 }
                 last_name = Some(name.clone());
@@ -81,25 +81,25 @@ pub(crate) fn parse_values(
                             i = -i;
                         }
                         if sorted.value && !values.is_empty() && i < last {
-                            abort!(span, Error::FieldsNotValueSorted);
+                            emit_error!(span, Error::FieldsNotValueSorted);
                         }
                         if values.insert(i, (v.ident, name)).is_some() {
-                            abort!(span, Error::DuplicateValue);
+                            emit_error!(span, Error::DuplicateValue);
                         }
                         last = i;
                     } else {
-                        abort!(span, Error::NoI64);
+                        emit_error!(span, Error::NoI64);
                     }
                 } else {
-                    abort!(span, Error::NotInteger);
+                    emit_error!(span, Error::NotInteger);
                 }
             } else {
                 if last == i64::MAX {
-                    abort!(span, Error::I64Overflow);
+                    emit_error!(span, Error::I64Overflow);
                 }
-                last += 1;
+                last = last.wrapping_add(1);
                 if values.insert(last, (v.ident, name)).is_some() {
-                    abort!(span, Error::DuplicateValue);
+                    emit_error!(span, Error::DuplicateValue);
                 }
             }
         }

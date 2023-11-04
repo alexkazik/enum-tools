@@ -1,6 +1,6 @@
 use crate::parser::error::Error;
 use proc_macro2::{Ident, Span};
-use proc_macro_error::abort;
+use proc_macro_error::{abort, emit_error};
 use std::collections::HashMap;
 use syn::punctuated::Punctuated;
 use syn::spanned::Spanned;
@@ -48,7 +48,8 @@ impl Params {
     pub(crate) fn get_bool(&mut self, name: &str) -> bool {
         if let Some((_, lit)) = self.params.remove(name) {
             if let Some(lit) = lit {
-                abort!(lit.span(), Error::UnexpectedLiteral);
+                emit_error!(lit.span(), Error::UnexpectedLiteral);
+                false
             } else {
                 true
             }
@@ -62,7 +63,8 @@ impl Params {
             if let Some(Lit::Str(l)) = lit {
                 Some(l.value())
             } else {
-                abort!(path, Error::ExpectedLiteral("string"));
+                emit_error!(path, Error::ExpectedLiteral("string"));
+                None
             }
         } else {
             None
@@ -76,10 +78,14 @@ impl Params {
                     "" => Some(vis_inherited()),
                     "pub(crate)" => Some(vis_pub_crate()),
                     "pub" => Some(vis_pub()),
-                    _ => abort!(path, Error::UnsupportedVisibility),
+                    _ => {
+                        emit_error!(path, Error::UnsupportedVisibility);
+                        None
+                    }
                 }
             } else {
-                abort!(path, Error::ExpectedLiteral("string"));
+                emit_error!(path, Error::ExpectedLiteral("string"));
+                None
             }
         } else {
             None
@@ -91,11 +97,10 @@ impl Params {
     }
 
     pub(crate) fn finish<T>(self, value: T) -> T {
-        if let Some((_, (param_path, _))) = self.params.into_iter().next() {
-            abort!(param_path, Error::UnknownParameter)
-        } else {
-            value
+        for (_, (param_path, _)) in self.params.into_iter() {
+            emit_error!(param_path, Error::UnknownParameter)
         }
+        value
     }
 }
 

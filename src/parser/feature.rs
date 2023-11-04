@@ -1,6 +1,6 @@
 use crate::parser::error::Error;
 use crate::parser::params::Params;
-use proc_macro_error::abort;
+use proc_macro_error::{abort, emit_error};
 use std::collections::HashMap;
 use syn::punctuated::Punctuated;
 use syn::spanned::Spanned;
@@ -23,19 +23,19 @@ impl FeatureParser {
                 .parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)
                 .unwrap_or_else(|e| abort!(meta_list, Error::MetaParseError(e)));
             for outer in nested {
-                let mut params;
+                let params;
                 if let Meta::Path(path) = outer {
-                    params = Params::new(path);
+                    params = Some(Params::new(path));
                 } else if let Meta::List(meta_list) = outer {
                     let nested = meta_list
                         .parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)
                         .unwrap_or_else(|e| abort!(meta_list, Error::MetaParseError(e)));
-                    params = Params::new(meta_list.path);
+                    let mut new_params = Params::new(meta_list.path);
                     for nested_meta in nested {
                         if let Meta::Path(path) = nested_meta {
                             let span = path.span();
-                            if params.insert(path, None) {
-                                abort!(span, Error::DuplicateParameter);
+                            if new_params.insert(path, None) {
+                                emit_error!(span, Error::DuplicateParameter);
                             }
                         } else if let Meta::NameValue(MetaNameValue {
                             path,
@@ -44,24 +44,28 @@ impl FeatureParser {
                         }) = nested_meta
                         {
                             let span = path.span();
-                            if params.insert(path, Some(lit)) {
-                                abort!(span, Error::DuplicateParameter);
+                            if new_params.insert(path, Some(lit)) {
+                                emit_error!(span, Error::DuplicateParameter);
                             }
                         } else {
-                            abort!(nested_meta, Error::UnknownFeature);
+                            emit_error!(nested_meta, Error::UnknownFeature);
                         }
                     }
+                    params = Some(new_params);
                 } else {
-                    abort!(outer, Error::UnknownFeature);
+                    params = None;
+                    emit_error!(outer, Error::UnknownFeature);
                 }
 
-                let span = params.span();
-                if self.insert(params) {
-                    abort!(span, Error::DuplicateFeature);
+                if let Some(params) = params {
+                    let span = params.span();
+                    if self.insert(params) {
+                        emit_error!(span, Error::DuplicateFeature);
+                    }
                 }
             }
         } else {
-            abort!(meta, Error::UnsupportedAttributeType);
+            emit_error!(meta, Error::UnsupportedAttributeType);
         }
     }
 
@@ -70,8 +74,8 @@ impl FeatureParser {
     }
 
     pub(crate) fn finish(self) {
-        if let Some((_, params)) = self.0.into_iter().next() {
-            abort!(params.span(), Error::UnknownFeature)
+        for (_, params) in self.0.into_iter() {
+            emit_error!(params.span(), Error::UnknownFeature)
         }
     }
 }

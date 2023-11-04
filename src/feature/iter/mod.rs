@@ -3,7 +3,7 @@ use crate::generator::names::Names;
 use crate::generator::Derive;
 use crate::parser::feature::FeatureParser;
 use proc_macro2::{Ident, Span, TokenStream};
-use proc_macro_error::abort;
+use proc_macro_error::emit_error;
 use quote::quote;
 use syn::Visibility;
 
@@ -47,7 +47,10 @@ impl FeatureIter {
                 "next_and_back" => IterMode::NextAndBack,
                 "table" => IterMode::Table,
                 "table_inline" => IterMode::TableInline,
-                _ => abort!(params.span(), "invalid mode"),
+                _ => {
+                    emit_error!(params.span(), "invalid mode");
+                    IterMode::Auto
+                }
             };
             params.finish(Self {
                 enabled: true,

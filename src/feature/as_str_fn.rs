@@ -3,7 +3,7 @@ use crate::generator::names::Names;
 use crate::generator::Derive;
 use crate::parser::feature::FeatureParser;
 use proc_macro2::TokenStream;
-use proc_macro_error::abort;
+use proc_macro_error::emit_error;
 use quote::quote;
 use syn::Visibility;
 
@@ -33,7 +33,10 @@ impl FeatureAsStrFn {
                 "auto" => AsStrMode::Auto,
                 "match" => AsStrMode::Match,
                 "table" => AsStrMode::Table,
-                _ => abort!(params.span(), "invalid mode"),
+                _ => {
+                    emit_error!(params.span(), "invalid mode");
+                    AsStrMode::Auto
+                }
             };
             params.finish(Self {
                 enabled: true,
