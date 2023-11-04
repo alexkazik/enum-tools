@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/alexkazik/enum-tools/workflows/CI/badge.svg?branch=master&event=push)](https://github.com/alexkazik/enum-tools/actions?query=workflow%3ACI+branch%3Amaster+event%3Apush)
+[![Codecov](https://codecov.io/github/alexkazik/enum-tools/coverage.svg?branch=main)](https://codecov.io/gh/alexkazik/enum-tools)
 [![Dependency status](https://deps.rs/repo/github/alexkazik/enum-tools/status.svg)](https://deps.rs/repo/github/alexkazik/enum-tools)
 [![crates.io](https://img.shields.io/crates/v/enum-tools.svg)](https://crates.io/crates/enum-tools)
 [![Downloads](https://img.shields.io/crates/d/enum-tools.svg)](https://crates.io/crates/enum-tools)
@@ -14,6 +14,7 @@ Automatically derive functions and trait implementations for enums.
 The enum must be field-less, has a primitive representation and be `Copy`.
 
 Many helpful function can be derived:
+
 - Into/TryFrom primitive
 - iterator over all items and/or names
 - next/previous item
@@ -23,6 +24,7 @@ Many helpful function can be derived:
 For the full documentation see `EnumTools`.
 
 ## Example
+
 ```rust
 #[derive(Clone, Copy, EnumTools)]
 // features which create function/constant

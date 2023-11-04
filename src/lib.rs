@@ -7,6 +7,7 @@
 //! The enum must be field-less, has a primitive representation and be [`Copy`](::std::marker::Copy).
 //!
 //! Many helpful function can be derived:
+//!
 //! - Into/TryFrom primitive
 //! - iterator over all items and/or names
 //! - next/previous item
@@ -16,6 +17,7 @@
 //! For the full documentation see [`EnumTools`](crate::EnumTools).
 //!
 //! # Example
+//!
 //! ```
 //! # use enum_tools::EnumTools;
 //! #[derive(Clone, Copy, EnumTools)]
