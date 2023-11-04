@@ -1,36 +1,6 @@
-mod eg {
-    #![no_implicit_prelude]
+include!("macro/macro.rs");
 
-    use ::enum_tools::EnumTools;
-
-    #[derive(EnumTools, Debug, Clone, Copy, Eq, PartialEq)]
-    #[enum_tools(iter(mode = "table_inline"))]
-    #[repr(i8)]
-    pub(crate) enum EG {
-        #[enum_tools(rename = "A*")]
-        A,
-        B,
-        C,
-        D,
-    }
-}
-
-mod eh {
-    #![no_implicit_prelude]
-
-    use ::enum_tools::EnumTools;
-
-    #[derive(EnumTools, Debug, Clone, Copy, Eq, PartialEq)]
-    #[enum_tools(iter(mode = "table_inline"))]
-    #[repr(i8)]
-    pub(crate) enum EH {
-        #[enum_tools(rename = "A*")]
-        A = 0,
-        B = 9,
-        C = 2,
-        D = 1,
-    }
-}
+setup!(#[enum_tools(iter(mode = "table_inline"))];);
 
 #[test]
 fn iter_table_inline_gapless() {

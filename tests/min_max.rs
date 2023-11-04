@@ -1,43 +1,12 @@
-mod eg {
-    #![no_implicit_prelude]
+include!("macro/macro.rs");
 
-    use ::enum_tools::EnumTools;
-
-    #[allow(dead_code)]
-    #[derive(EnumTools, Debug, Clone, Copy, Eq, PartialEq)]
-    #[enum_tools(MIN, MAX)]
-    #[repr(i8)]
-    pub(crate) enum EG {
-        #[enum_tools(rename = "A*")]
-        A,
-        B,
-        C,
-        D,
-    }
-}
-
-mod eh {
-    #![no_implicit_prelude]
-
-    use ::enum_tools::EnumTools;
-
-    #[allow(dead_code)]
-    #[derive(EnumTools, Debug, Clone, Copy, Eq, PartialEq)]
-    #[enum_tools(MIN, MAX)]
-    #[repr(i8)]
-    pub(crate) enum EH {
-        #[enum_tools(rename = "A*")]
-        A = 0,
-        B = 9,
-        C = 2,
-        D = 1,
-    }
-}
-
+setup!(#[enum_tools(MIN, MAX)];);
 #[test]
 fn min_max_gapless() {
     use eg::EG;
     assert_eq!(EG::MIN, EG::A);
+    let _ = EG::B; // to silence dead-code warning
+    let _ = EG::C; // to silence dead-code warning
     assert_eq!(EG::MAX, EG::D);
 }
 
@@ -46,4 +15,6 @@ fn min_max_with_holes() {
     use eh::EH;
     assert_eq!(EH::MIN, EH::A);
     assert_eq!(EH::MAX, EH::B);
+    let _ = EH::C; // to silence dead-code warning
+    let _ = EH::D; // to silence dead-code warning
 }

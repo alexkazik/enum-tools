@@ -1,3 +1,6 @@
+// include!("macro/macro.rs");
+//
+// setup!(#[enum_tools(iter(mode = "range"))];);
 mod eg {
     #![no_implicit_prelude]
 

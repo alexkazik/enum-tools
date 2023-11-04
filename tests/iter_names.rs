@@ -1,47 +1,23 @@
-mod eg {
-    #![no_implicit_prelude]
+include!("macro/macro.rs");
 
-    use ::enum_tools::EnumTools;
-
-    #[allow(dead_code)]
-    #[derive(EnumTools, Debug, Clone, Copy, Eq, PartialEq)]
-    #[enum_tools(names)]
-    #[repr(i8)]
-    pub(crate) enum EG {
-        #[enum_tools(rename = "A*")]
-        A,
-        B,
-        C,
-        D,
-    }
-}
-
-mod eh {
-    #![no_implicit_prelude]
-
-    use ::enum_tools::EnumTools;
-
-    #[allow(dead_code)]
-    #[derive(EnumTools, Debug, Clone, Copy, Eq, PartialEq)]
-    #[enum_tools(names)]
-    #[repr(i8)]
-    pub(crate) enum EH {
-        #[enum_tools(rename = "A*")]
-        A = 0,
-        B = 9,
-        C = 2,
-        D = 1,
-    }
-}
+setup!(#[enum_tools(names)];);
 
 #[test]
 fn iter_names_gapless() {
     use eg::EG;
     assert_eq!(EG::names().collect::<Vec<_>>(), vec!["A*", "B", "C", "D"]);
+    let _ = EG::A; // to silence dead-code warning
+    let _ = EG::B; // to silence dead-code warning
+    let _ = EG::C; // to silence dead-code warning
+    let _ = EG::D; // to silence dead-code warning
 }
 
 #[test]
 fn iter_names_with_holes() {
     use eh::EH;
     assert_eq!(EH::names().collect::<Vec<_>>(), vec!["A*", "D", "C", "B"]);
+    let _ = EH::A; // to silence dead-code warning
+    let _ = EH::B; // to silence dead-code warning
+    let _ = EH::C; // to silence dead-code warning
+    let _ = EH::D; // to silence dead-code warning
 }

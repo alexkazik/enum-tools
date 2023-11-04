@@ -1,19 +1,6 @@
-mod eg {
-    #![no_implicit_prelude]
+include!("macro/macro.rs");
 
-    use ::enum_tools::EnumTools;
-
-    #[derive(EnumTools, Debug, Clone, Copy, Eq, PartialEq)]
-    #[enum_tools(iter(mode = "range"), range)]
-    #[repr(i8)]
-    pub(crate) enum EG {
-        #[enum_tools(rename = "A*")]
-        A,
-        B,
-        C,
-        D,
-    }
-}
+setup_g!(#[enum_tools(iter(mode = "range"), range)];);
 
 #[test]
 fn range_range() {
@@ -22,4 +9,5 @@ fn range_range() {
         EG::range(EG::A, EG::D).collect::<Vec<_>>(),
         vec![EG::A, EG::B, EG::C, EG::D]
     );
+    let _ = EG::iter(); // to silence dead-code warning
 }
