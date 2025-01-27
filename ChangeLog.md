@@ -1,5 +1,9 @@
 # Changelog for enum-tools
 
+## 0.5.4 -- 2025-01-27
+
+* Use const fn when possible
+
 ## 0.5.3 -- 2023-11-04
 
 * Add support to rename fields
