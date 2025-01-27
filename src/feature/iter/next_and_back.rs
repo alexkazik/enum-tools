@@ -38,7 +38,7 @@ impl FeatureIter {
         let inner = quote! {
             #[doc=#doc_inner]
             #[inline]
-            #vis fn #ident_iter_fn() -> #ident_iter_struct {
+            #vis const fn #ident_iter_fn() -> #ident_iter_struct {
                 use ::core::option::Option::Some;
                 #ident_iter_struct {
                     fwd: Some(#ident_enum::#ident_min),

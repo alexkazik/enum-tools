@@ -43,7 +43,7 @@ impl FeatureIntoFn {
         quote! {
             /// Converts this element into the underlying representation (this is a no-op)
             #[inline]
-            #vis fn #ident_to_fn(self) -> #repr {
+            #vis const fn #ident_to_fn(self) -> #repr {
                 self as #repr
             }
         }

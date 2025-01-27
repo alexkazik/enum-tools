@@ -58,7 +58,7 @@ impl FeatureNextFn {
             quote! {
                 /// Returns the next element after this in value order
                 #[inline]
-                #vis fn #ident_next(self) -> ::core::option::Option<Self> {
+                #vis const fn #ident_next(self) -> ::core::option::Option<Self> {
                     use ::core::option::Option::{None, Some};
                     if (self as #repr) == (Self::#ident_max as #repr) {
                         None
