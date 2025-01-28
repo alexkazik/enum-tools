@@ -1,6 +1,6 @@
 [package]
 name = "enum-tools"
-version = "0.5.4"
+version = "0.5.5"
 authors = ["ALeX Kazik <alex@kazik.de>"]
 edition = "2021"
 description = "Automatically derive functions and trait implementations for enums"

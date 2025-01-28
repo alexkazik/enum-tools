@@ -1,5 +1,11 @@
 # Changelog for enum-tools
 
+## 0.5.5 -- 2025-01-28
+
+* Remove const from fn unless it's always there
+  Prior some fn's are only const in certain configurations
+* Improve documentation
+
 ## 0.5.4 -- 2025-01-27
 
 * Use const fn when possible
