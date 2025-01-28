@@ -113,7 +113,7 @@ impl FeatureRangeFn {
                 },
                 IterMode::NextAndBack => quote! {
                     #[doc=#doc_inner]
-                    #vis const fn #ident_range_fn(start: Self, end: Self) -> #ident_iter_struct {
+                    #vis fn #ident_range_fn(start: Self, end: Self) -> #ident_iter_struct {
                         let start_idx = (start as #repr).wrapping_sub(Self::#ident_min as #repr) as #repr_unsigned as usize;
                         let end_idx = (end as #repr).wrapping_sub(Self::#ident_min as #repr) as #repr_unsigned as usize;
 

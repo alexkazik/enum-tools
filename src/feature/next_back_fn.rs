@@ -58,7 +58,7 @@ impl FeatureNextBackFn {
             quote! {
                 /// Returns the previous element before this in value order
                 #[inline]
-                #vis const fn #ident_next_back(self) -> ::core::option::Option<Self> {
+                #vis fn #ident_next_back(self) -> ::core::option::Option<Self> {
                     use ::core::option::Option::{None, Some};
                     if (self as #repr) == (Self::#ident_min as #repr) {
                         None

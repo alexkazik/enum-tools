@@ -101,7 +101,7 @@ impl FeatureAsStrFn {
                 }
                 quote! {
                     /// Returns the name of this element
-                    #vis const fn #ident_as_str(self) -> &'static str {
+                    #vis fn #ident_as_str(self) -> &'static str {
                         match self {
                             #(#matches)*
                         }
@@ -113,7 +113,7 @@ impl FeatureAsStrFn {
                     quote! {
                         /// Returns the name of this element
                         #[inline]
-                        #vis const fn #ident_as_str(self) -> &'static str {
+                        #vis fn #ident_as_str(self) -> &'static str {
                             Self::#ident_table_name[(self as #repr).wrapping_sub(Self::#ident_min as #repr) as #repr_unsigned as usize]
                         }
                     }

@@ -60,7 +60,7 @@ impl FeatureTryFromFn {
             quote! {
                 /// Try to convert a value into this enum
                 #[inline]
-                #vis const fn #ident_try_from_fn(value: #repr) -> ::core::option::Option<Self> {
+                #vis fn #ident_try_from_fn(value: #repr) -> ::core::option::Option<Self> {
                     use ::core::option::Option::{None, Some};
                     if (value as #repr) >= (Self::#ident_min as #repr) && (value as #repr) <= (Self::#ident_max as #repr) {
                         // Safety: the number is known to be a valid enum

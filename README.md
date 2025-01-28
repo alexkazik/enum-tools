@@ -46,7 +46,7 @@ impl MyEnum {
     pub const MAX : Self = MyEnum::B;
     pub fn as_str(self) -> &'static str
     pub fn from_str(s: &str) -> Option<Self>
-    pub fn into(self) -> i8 { self as i8 }
+    pub const fn into(self) -> i8 { self as i8 }
     pub fn next(self) -> Option<Self> // the next element by value (or None if last)
     pub fn next_back(self) -> Option<Self> // the previous element by value (or None if first)
     pub fn try_from(value: i8) -> Option<Self>

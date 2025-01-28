@@ -43,7 +43,7 @@
 //!     # {todo!()}
 //!     pub fn from_str(s: &str) -> Option<Self>
 //!     # {todo!()}
-//!     pub fn into(self) -> i8 { self as i8 }
+//!     pub const fn into(self) -> i8 { self as i8 }
 //!     pub fn next(self) -> Option<Self> // the next element by value (or None if last)
 //!     # {todo!()}
 //!     pub fn next_back(self) -> Option<Self> // the previous element by value (or None if first)
@@ -218,7 +218,7 @@ mod parser;
 ///
 /// ## into
 ///
-/// `$vis fn into(self) -> $repr`
+/// `$vis const fn into(self) -> $repr`
 ///
 /// Converts the enum into the primitive.
 ///
